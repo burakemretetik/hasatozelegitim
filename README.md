@@ -1,6 +1,6 @@
-# Kavram Özel Eğitim
+# Hasat Özel Eğitim
 
-Almanya'daki Türk ailelere online özel eğitim ve aile danışmanlığı – Hanife Tetik.
+Türkiye ve yurt dışındaki ailelere Türkçe online özel eğitim ve aile danışmanlığı – Hanife Tetik.
 
 Statik site, GitHub Pages ile yayınlanır.
 
