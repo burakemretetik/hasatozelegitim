@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://burakemretetik.github.io/hasatozelegitim/sitemap.xml

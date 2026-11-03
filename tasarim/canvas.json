@@ -142,6 +142,42 @@
       "title": "Datenschutz (DE)",
       "expand": "fill",
       "is_interactive": true
+    },
+    "BlogDisleksi.dc.html": {
+      "x": 12160,
+      "y": 0,
+      "w": 1440,
+      "h": 4100,
+      "title": "Blog · Disleksinin ilk işaretleri",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogDisleksiDe.dc.html": {
+      "x": 12160,
+      "y": 4220,
+      "w": 1440,
+      "h": 4300,
+      "title": "Blog · Legasthenie (DE)",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogRutin.dc.html": {
+      "x": 13680,
+      "y": 0,
+      "w": 1440,
+      "h": 3900,
+      "title": "Blog · Günlük rutinler",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogRutinDe.dc.html": {
+      "x": 13680,
+      "y": 4020,
+      "w": 1440,
+      "h": 4100,
+      "title": "Blog · Tagesabläufe (DE)",
+      "expand": "fill",
+      "is_interactive": true
     }
   },
   "order": [
@@ -155,6 +191,10 @@
     "BlogOtizmDe.dc.html",
     "BlogIkiDil.dc.html",
     "BlogIkiDilDe.dc.html",
+    "BlogDisleksi.dc.html",
+    "BlogDisleksiDe.dc.html",
+    "BlogRutin.dc.html",
+    "BlogRutinDe.dc.html",
     "Kunye.dc.html",
     "Impressum.dc.html",
     "Gizlilik.dc.html",

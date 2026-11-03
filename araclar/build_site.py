@@ -3,12 +3,46 @@
 Usage: python3 build_site.py <project_dir> <out_dir>
 """
 import html
+import json
 import os
 import re
 import sys
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 ACCENT = "#E8A33D"
+
+# ---------------------------------------------------------------- domain / SEO
+# The custom domain is prepared but not active yet. When the DNS records are in place
+# (see README), set CUSTOM_DOMAIN = "hasatozelegitim.com" and rebuild: canonical URLs,
+# hreflang links, sitemap and share images then use the domain and a CNAME file is written.
+CUSTOM_DOMAIN = None
+DEFAULT_URL = "https://burakemretetik.github.io/hasatozelegitim/"
+SITE_URL = f"https://{CUSTOM_DOMAIN}/" if CUSTOM_DOMAIN else DEFAULT_URL
+LASTMOD = "2026-11-03"
+SITE_NAME = "Hasat Özel Eğitim"
+
+# Turkish page -> German counterpart (for hreflang and the sitemap)
+PAIRS = {
+    "Main.dc.html": "Deutsch.dc.html",
+    "Blog.dc.html": "BlogDe.dc.html",
+    "BlogYazi.dc.html": "BlogYaziDe.dc.html",
+    "BlogOtizm.dc.html": "BlogOtizmDe.dc.html",
+    "BlogIkiDil.dc.html": "BlogIkiDilDe.dc.html",
+    "BlogDisleksi.dc.html": "BlogDisleksiDe.dc.html",
+    "BlogRutin.dc.html": "BlogRutinDe.dc.html",
+    "Kunye.dc.html": "Impressum.dc.html",
+    "Gizlilik.dc.html": "Datenschutz.dc.html",
+}
+COUNTERPART = {**PAIRS, **{v: k for k, v in PAIRS.items()}}
+# blog articles and their publication dates
+ARTICLE_DATES = {
+    "BlogYazi.dc.html": "2026-10-27", "BlogYaziDe.dc.html": "2026-10-27",
+    "BlogOtizm.dc.html": "2026-11-03", "BlogOtizmDe.dc.html": "2026-11-03",
+    "BlogIkiDil.dc.html": "2026-11-03", "BlogIkiDilDe.dc.html": "2026-11-03",
+    "BlogDisleksi.dc.html": "2026-11-03", "BlogDisleksiDe.dc.html": "2026-11-03",
+    "BlogRutin.dc.html": "2026-11-03", "BlogRutinDe.dc.html": "2026-11-03",
+}
+HOME_PAGES = {"Main.dc.html", "Deutsch.dc.html"}
 
 # source artboard -> output path, language, description
 PAGES = {
@@ -32,6 +66,14 @@ PAGES = {
         "Frühe Anzeichen von Autismus: worauf Eltern bei sozialer Kommunikation, Sprache und wiederholendem Verhalten achten können und an wen sie sich wenden."),
     "BlogIkiDilDe.dc.html": ("de/blog/zweisprachig-aufwachsen.html", "de",
         "Zweisprachigkeit verzögert die Sprachentwicklung nicht – auch nicht bei Kindern im Autismus-Spektrum. Warum sich die Familiensprache lohnt und was Sie zu Hause tun können."),
+    "BlogDisleksi.dc.html": ("blog/disleksinin-ilk-isaretleri.html", "tr",
+        "Disleksinin okul öncesi ve okula başlarken görülen ilk işaretleri, iki dilli çocuklarda dikkat edilmesi gerekenler ve Türkiye ile Almanya'da tanı süreci."),
+    "BlogRutin.dc.html": ("blog/gunluk-rutinler.html", "tr",
+        "Öngörülebilir bir gün otizmli çocuklara güven verir. Görsel program, geçişler ve esneklik üzerine evde uygulanabilecek pratik öneriler."),
+    "BlogDisleksiDe.dc.html": ("de/blog/erste-anzeichen-legasthenie.html", "de",
+        "Erste Anzeichen von Legasthenie vor und nach dem Schulstart, Besonderheiten bei zweisprachigen Kindern und der Weg zur Diagnose in Deutschland und der Türkei."),
+    "BlogRutinDe.dc.html": ("de/blog/feste-tagesablaeufe.html", "de",
+        "Ein vorhersehbarer Tag gibt Kindern im Autismus-Spektrum Sicherheit. Praktische Tipps zu visuellen Tagesplänen, Übergängen und Flexibilität."),
     "Kunye.dc.html": ("kunye/index.html", "tr", "Hasat Özel Eğitim künye bilgileri."),
     "Gizlilik.dc.html": ("gizlilik/index.html", "tr", "Hasat Özel Eğitim gizlilik ve kişisel verilerin korunması metni (KVKK ve GDPR)."),
     "Impressum.dc.html": ("de/impressum/index.html", "de", "Impressum von Hasat Özel Eğitim."),
@@ -47,6 +89,10 @@ REAL_TITLES = {
     "Yurt dışında iki dilli büyümek: Evde Türkçe konuşmaya devam etmeli miyim?",
     "Frühe Anzeichen von Autismus: Worauf Eltern achten sollten",
     "Zweisprachig aufwachsen: Soll ich zu Hause weiter Türkisch sprechen?",
+    "Disleksinin ilk işaretleri: Okula başlarken nelere dikkat etmeli?",
+    "Günlük rutinler çocuğunuza nasıl güven verir?",
+    "Erste Anzeichen von Legasthenie: Worauf Sie zum Schulstart achten sollten",
+    "Wie feste Tagesabläufe Ihrem Kind Sicherheit geben",
 }
 # artboard of each published article, used for links on the blog list page
 POST_PAGE = {
@@ -56,6 +102,10 @@ POST_PAGE = {
     "Yurt dışında iki dilli büyümek: Evde Türkçe konuşmaya devam etmeli miyim?": "BlogIkiDil.dc.html",
     "Frühe Anzeichen von Autismus: Worauf Eltern achten sollten": "BlogOtizmDe.dc.html",
     "Zweisprachig aufwachsen: Soll ich zu Hause weiter Türkisch sprechen?": "BlogIkiDilDe.dc.html",
+    "Disleksinin ilk işaretleri: Okula başlarken nelere dikkat etmeli?": "BlogDisleksi.dc.html",
+    "Günlük rutinler çocuğunuza nasıl güven verir?": "BlogRutin.dc.html",
+    "Erste Anzeichen von Legasthenie: Worauf Sie zum Schulstart achten sollten": "BlogDisleksiDe.dc.html",
+    "Wie feste Tagesabläufe Ihrem Kind Sicherheit geben": "BlogRutinDe.dc.html",
 }
 
 # fonts are served from this site (no request to Google's servers)
@@ -89,7 +139,6 @@ POSTS = {
             ("İki dillilik", "Yurt dışında iki dilli büyümek: Evde Türkçe konuşmaya devam etmeli miyim?", "Pek çok aile, iki dilin çocuğun dil gelişimini yavaşlatacağından endişe ediyor. Araştırmalar ne diyor, evde neler yapabilirsiniz?"),
             ("Disleksi", "Disleksinin ilk işaretleri: Okula başlarken nelere dikkat etmeli?", "Harfleri karıştırma, yavaş okuma ve sık yazım hataları. Erken fark etmenin çocuğunuza sağlayacağı avantajlar."),
             ("Aile", "Günlük rutinler çocuğunuza nasıl güven verir?", "Öngörülebilir bir gün, otizmli çocuklar için güvenli bir zemin olabilir. Evde rutin oluşturmanın pratik yolları."),
-            ("Otizm", "Erken tanı neden önemli? Ailelerin bilmesi gerekenler", "Gelişimin en hızlı olduğu dönemde başlanan destek, sonraki öğrenmeler için sağlam bir zemin oluşturur."),
         ],
     },
     "de": {
@@ -103,7 +152,6 @@ POSTS = {
             ("Zweisprachigkeit", "Zweisprachig aufwachsen: Soll ich zu Hause weiter Türkisch sprechen?", "Viele Eltern befürchten, dass zwei Sprachen die Sprachentwicklung verlangsamen. Was sagt die Forschung, und was können Sie zu Hause tun?"),
             ("Legasthenie", "Erste Anzeichen von Legasthenie: Worauf Sie zum Schulstart achten sollten", "Verwechselte Buchstaben, langsames Lesen und häufige Rechtschreibfehler. Warum es sich lohnt, früh hinzuschauen."),
             ("Familie", "Wie feste Tagesabläufe Ihrem Kind Sicherheit geben", "Ein vorhersehbarer Tag kann für Kinder im Autismus-Spektrum ein sicherer Rahmen sein. Praktische Wege zu festen Routinen zu Hause."),
-            ("Autismus", "Warum ist eine frühe Diagnose so wichtig?", "Förderung in der Phase der schnellsten Entwicklung schafft eine stabile Grundlage für späteres Lernen."),
         ],
     },
 }
@@ -240,6 +288,98 @@ def drop_unpublished_cards(content):
     return content
 
 
+def page_url(src_name):
+    path = PAGES[src_name][0]
+    if path.endswith("index.html"):
+        path = path[: -len("index.html")]
+    return SITE_URL + path
+
+
+def seo_head(src_name, lang, title, desc):
+    """canonical, hreflang, Open Graph and JSON-LD for one page."""
+    url = page_url(src_name)
+    other = COUNTERPART.get(src_name)
+    tr_name = src_name if lang == "tr" else other
+    image = SITE_URL + f"assets/og/hasat-{lang}.png"
+    esc = lambda v: html.escape(v, quote=True)
+    out = [f'<link rel="canonical" href="{url}">']
+    if other:
+        out.append(f'<link rel="alternate" hreflang="{lang}" href="{url}">')
+        out.append(f'<link rel="alternate" hreflang="{"de" if lang == "tr" else "tr"}" href="{page_url(other)}">')
+        out.append(f'<link rel="alternate" hreflang="x-default" href="{page_url(tr_name)}">')
+    is_article = src_name in ARTICLE_DATES
+    out += [
+        f'<meta property="og:type" content="{"article" if is_article else "website"}">',
+        f'<meta property="og:site_name" content="{SITE_NAME}">',
+        f'<meta property="og:title" content="{esc(title)}">',
+        f'<meta property="og:description" content="{esc(desc)}">',
+        f'<meta property="og:url" content="{url}">',
+        f'<meta property="og:locale" content="{"tr_TR" if lang == "tr" else "de_DE"}">',
+        f'<meta property="og:locale:alternate" content="{"de_DE" if lang == "tr" else "tr_TR"}">',
+        f'<meta property="og:image" content="{image}">',
+        '<meta property="og:image:width" content="1200">',
+        '<meta property="og:image:height" content="630">',
+        f'<meta property="og:image:alt" content="{esc(SITE_NAME)}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+    ]
+    org = {
+        "@type": "EducationalOrganization",
+        "@id": SITE_URL + "#organization",
+        "name": SITE_NAME,
+        "url": SITE_URL,
+        "logo": SITE_URL + "assets/logo/hasat-profil-fotografi.png",
+        "email": "hasatozelegitim@gmail.com",
+        "telephone": "+905419713092",
+        "address": {"@type": "PostalAddress", "addressLocality": "Efeler", "addressRegion": "Aydın", "addressCountry": "TR"},
+        "areaServed": ["TR", "DE"],
+        "knowsLanguage": ["tr"],
+        "employee": {"@type": "Person", "name": "Hanife Tetik",
+                     "jobTitle": "Özel Eğitim Uzmanı" if lang == "tr" else "Sonderpädagogin"},
+    }
+    graph = None
+    if src_name in HOME_PAGES:
+        graph = [org, {"@type": "WebSite", "@id": SITE_URL + "#website", "url": SITE_URL, "name": SITE_NAME,
+                       "inLanguage": ["tr", "de"], "publisher": {"@id": SITE_URL + "#organization"}}]
+    elif is_article:
+        out.append(f'<meta property="article:published_time" content="{ARTICLE_DATES[src_name]}">')
+        graph = [{"@type": "BlogPosting", "headline": title, "description": desc, "inLanguage": lang,
+                  "datePublished": ARTICLE_DATES[src_name], "dateModified": ARTICLE_DATES[src_name],
+                  "mainEntityOfPage": url, "image": image,
+                  "author": {"@type": "Person", "name": "Hanife Tetik",
+                             "jobTitle": "Özel Eğitim Uzmanı" if lang == "tr" else "Sonderpädagogin"},
+                  "publisher": {"@type": "Organization", "@id": SITE_URL + "#organization", "name": SITE_NAME,
+                                "logo": {"@type": "ImageObject", "url": SITE_URL + "assets/logo/hasat-profil-fotografi.png"}}}]
+    if graph:
+        data = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False)
+        out.append(f'<script type="application/ld+json">{data}</script>')
+    return "\n".join(out)
+
+
+def write_sitemap():
+    ns = 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"'
+    rows = []
+    for name, (_, lang, _) in PAGES.items():
+        alt = ""
+        other = COUNTERPART.get(name)
+        if other:
+            tr_name = name if lang == "tr" else other
+            alt = (f'\n    <xhtml:link rel="alternate" hreflang="{lang}" href="{page_url(name)}"/>'
+                   f'\n    <xhtml:link rel="alternate" hreflang="{"de" if lang == "tr" else "tr"}" href="{page_url(other)}"/>'
+                   f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{page_url(tr_name)}"/>')
+        lastmod = ARTICLE_DATES.get(name, LASTMOD)
+        rows.append(f"  <url>\n    <loc>{page_url(name)}</loc>\n    <lastmod>{lastmod}</lastmod>{alt}\n  </url>")
+    with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as f:
+        f.write(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset {ns}>\n' + "\n".join(rows) + "\n</urlset>\n")
+    with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as f:
+        f.write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}sitemap.xml\n")
+    cname = os.path.join(OUT, "CNAME")
+    if CUSTOM_DOMAIN:
+        with open(cname, "w") as f:
+            f.write(CUSTOM_DOMAIN + "\n")
+    elif os.path.exists(cname):
+        os.remove(cname)
+
+
 def convert(src_name, out_path, lang, desc):
     src = open(os.path.join(SRC, src_name), encoding="utf-8").read()
     title = re.search(r"<title>(.*?)</title>", src, re.S).group(1).strip()
@@ -280,11 +420,10 @@ def convert(src_name, out_path, lang, desc):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{html.escape(desc, quote=True)}">
-<meta property="og:title" content="{title}">
-<meta property="og:description" content="{html.escape(desc, quote=True)}">
-<meta property="og:type" content="website">
+{seo_head(src_name, lang, title.split(" · ")[0] if src_name in ARTICLE_DATES else title, desc)}
 <meta name="theme-color" content="#12312B">
 <link rel="icon" href="{favicon_href}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{prefix}assets/apple-touch-icon.png">
 <link rel="preload" href="{prefix}assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 {helmet}
 <style>[hidden]{{display:none !important}}html{{scroll-behavior:smooth}}</style>
@@ -309,4 +448,5 @@ for name, (out_path, lang, desc) in PAGES.items():
 with open(os.path.join(OUT, "favicon.svg"), "w", encoding="utf-8") as f:
     f.write(FAVICON)
 open(os.path.join(OUT, ".nojekyll"), "w").close()
+write_sitemap()
 print("done")
