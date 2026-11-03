@@ -85,7 +85,7 @@ h1,h2,h3{hyphens:auto;-webkit-hyphens:auto}
 @keyframes il-climb{0%{offset-distance:0%;opacity:0}6%{opacity:1}88%{opacity:1}100%{offset-distance:100%;opacity:0}}
 @media (prefers-reduced-motion: reduce){.il-sway,.il-drop,.il-ripple,.il-soak,.il-climb{animation:none}.il-draw{animation:none;stroke-dashoffset:0}}
 .dm-drop{animation:dm-drop 5s linear infinite}
-@keyframes dm-drop{0%{transform:translateY(0);opacity:0}12%{opacity:1}19%{transform:translateY(0);animation-timing-function:cubic-bezier(.55,.085,.68,.53)}30%{transform:translateY(73px);opacity:1}31%,100%{transform:translateY(75px);opacity:0}}
+@keyframes dm-drop{0%,14%{transform:translateY(-30px);opacity:0;animation-timing-function:cubic-bezier(.45,.05,.8,.5)}23%{opacity:0}27%{opacity:1}30%{transform:translateY(73px);opacity:1}31%,100%{transform:translateY(75px);opacity:0}}
 .dm-splash{opacity:0;animation:dm-splash-l 5s ease-out infinite}
 .dm-splash-r{animation-name:dm-splash-r}
 @keyframes dm-splash-l{0%,30%{opacity:0;transform:translate(0,0)}31%{opacity:.95}42%{opacity:0;transform:translate(-12px,4px)}100%{opacity:0}}
