@@ -330,7 +330,7 @@ def seo_head(src_name, lang, title, desc):
         "logo": SITE_URL + "assets/logo/hasat-profil-fotografi.png",
         "email": "hasatozelegitim@gmail.com",
         "telephone": "+905419713092",
-        "address": {"@type": "PostalAddress", "addressLocality": "Efeler", "addressRegion": "Aydın", "addressCountry": "TR"},
+        "address": {"@type": "PostalAddress", "streetAddress": "Girne Mahallesi, Girne Bulvarı, Aybüke Sitesi A Blok No: 76, Zemin Kat", "postalCode": "09100", "addressLocality": "Efeler", "addressRegion": "Aydın", "addressCountry": "TR"},
         "areaServed": ["TR", "DE"],
         "knowsLanguage": ["tr"],
         "employee": {"@type": "Person", "name": "Hanife Tetik",
