@@ -404,6 +404,8 @@ def convert(src_name, out_path, lang, desc):
     if "{{ posts }}" in content:
         content, script = build_blog_list(content, lang)
     content = drop_unpublished_cards(content)
+    # FAQ items still holding [placeholders] are drafts: shown on the canvas, left out of the site
+    content = re.sub(r'<details data-taslak[^>]*>.*?</details>\n?', '', content, flags=re.S)
 
     for part in ("helmet", "content"):
         pass
