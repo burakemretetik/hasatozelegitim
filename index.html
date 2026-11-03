@@ -123,6 +123,8 @@ details[open] .faq-plus{transform:rotate(45deg)}
 @keyframes tr-climb-glow{0%{offset-distance:0%;opacity:0}5%{opacity:.25}90%{opacity:.25}100%{offset-distance:100%;opacity:0}}
 @media (prefers-reduced-motion: reduce){.tr-climb,.tr-glow{animation:none;opacity:0}}
 /* door-band */.ct-glow{animation:ct-glow 4.5s ease-in-out infinite alternate}@keyframes ct-glow{from{opacity:.8}to{opacity:1}}.ct-btns a:hover{filter:brightness(1.08)}@media (max-width: 640px){.ct-head{text-align:left!important}.ct-btns{flex-direction:column}}@media (prefers-reduced-motion: reduce){.ct-glow{animation:none}}/* /door-band */
+/* ft */.ft-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}.ft a:hover{color:#F4F6F3!important}@media (max-width: 880px){.ft-grid{grid-template-columns:1fr 1fr;gap:32px 24px}.ft-brand{grid-column:1/-1}}/* /ft */
+/* dm-still */@media (prefers-reduced-motion: reduce){.dm-drop{transform:translateY(34px)}}/* /dm-still */
 </style>
 <style>[hidden]{display:none !important}html{scroll-behavior:smooth}</style>
 </head>
@@ -138,8 +140,6 @@ details[open] .faq-plus{transform:rotate(45deg)}
 <div class="hdr-right" style="display: flex; align-items: center; gap: 28px">
 <nav class="nav-links" aria-label="Ana menü" style="gap: 28px; font-size: 15px; font-weight: 500">
 <a href="#hakkimizda" style="text-decoration: none">Hakkımızda</a>
-<a href="#calismalarimiz" style="text-decoration: none">Çalışmalarımız</a>
-<a href="#surec" style="text-decoration: none">Süreç</a>
 <a href="#sss" style="text-decoration: none">SSS</a>
 <a href="blog/" style="text-decoration: none">Blog</a>
 </nav>
@@ -151,8 +151,6 @@ details[open] .faq-plus{transform:rotate(45deg)}
 <summary aria-label="Menüyü aç" style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; box-sizing: border-box; border: 1px solid #C9D3CE; border-radius: 999px"><svg class="ic-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#12312B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg><svg class="ic-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#12312B" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></summary>
 <nav class="mob-panel" aria-label="Menü">
 <a href="#hakkimizda">Hakkımızda</a>
-<a href="#calismalarimiz">Çalışmalarımız</a>
-<a href="#surec">Süreç</a>
 <a href="#sss">SSS</a>
 <a href="blog/">Blog</a>
 <a href="#iletisim">İletişim</a>
@@ -381,18 +379,26 @@ details[open] .faq-plus{transform:rotate(45deg)}
 </div>
 </section>
 
-<footer style="border-top: 1px solid #D9E0DC">
-<div style="max-width: 1200px; margin: 0 auto; padding: 40px 24px 48px; display: flex; flex-wrap: wrap; gap: 24px 48px; justify-content: space-between; font-size: 15px; color: #3E5650">
-<div style="display: flex; flex-direction: column; gap: 6px; flex: 1 1 360px">
-<span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 650; font-size: 22px; letter-spacing: -0.02em; color: #12312B">Hasat Özel Eğitim</span>
-<span>Hanife Tetik · Özel Eğitim Uzmanı</span>
-<span>Efeler, Aydın, Türkiye</span>
+<footer class="ft" style="background: #12312B; color: #C5D3CE">
+<div style="max-width: 1200px; margin: 0 auto; padding: clamp(48px, 6vw, 72px) 24px 28px; font-size: 15px">
+<div class="ft-grid">
+<div class="ft-brand">
+<a href="#top" style="display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #F4F6F3" aria-label="Hasat Özel Eğitim ana sayfa"><svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true" style="margin: 0 -6px"><path d="M20 38.5 V13.5" fill="none" stroke="#F4F6F3" stroke-width="1.1" stroke-linecap="round"></path><path transform="translate(20 6.5)" d="M0 -6 C 2.4 -3, 2.4 3, 0 6 C -2.4 3, -2.4 -3, 0 -6 Z" fill="#E8A33D"></path><path transform="translate(16.2 12.9) rotate(-32)" d="M0 -6 C 2.4 -3, 2.4 3, 0 6 C -2.4 3, -2.4 -3, 0 -6 Z" fill="#E8A33D"></path><path transform="translate(23.8 12.9) rotate(32)" d="M0 -6 C 2.4 -3, 2.4 3, 0 6 C -2.4 3, -2.4 -3, 0 -6 Z" fill="#E8A33D"></path><path transform="translate(16.2 19.4) rotate(-32)" d="M0 -6 C 2.4 -3, 2.4 3, 0 6 C -2.4 3, -2.4 -3, 0 -6 Z" fill="#E8A33D"></path><path transform="translate(23.8 19.4) rotate(32)" d="M0 -6 C 2.4 -3, 2.4 3, 0 6 C -2.4 3, -2.4 -3, 0 -6 Z" fill="#E8A33D"></path><path transform="translate(16.2 25.9) rotate(-32)" d="M0 -6 C 2.4 -3, 2.4 3, 0 6 C -2.4 3, -2.4 -3, 0 -6 Z" fill="#E8A33D"></path><path transform="translate(23.8 25.9) rotate(32)" d="M0 -6 C 2.4 -3, 2.4 3, 0 6 C -2.4 3, -2.4 -3, 0 -6 Z" fill="#E8A33D"></path></svg><span style="display: flex; flex-direction: column; line-height: 1"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 650; font-size: 26px; letter-spacing: -0.02em">Hasat</span><span style="margin-top: 4px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; color: #B9C9C3">ÖZEL EĞİTİM</span></span></a>
+<p style="margin: 20px 0 0; max-width: 320px; line-height: 1.6">Türkiye’deki ve yurt dışındaki ailelerle online çalışıyoruz.</p>
+<p style="margin: 8px 0 0">Efeler, Aydın, Türkiye</p>
 </div>
-<nav aria-label="Yasal" style="display: flex; flex-direction: column; gap: 8px">
-<a href="kunye/" style="display: inline-block; padding: 10px 0; margin: -10px 0; text-decoration: none">Künye (Impressum)</a>
-<a href="gizlilik/" style="display: inline-block; padding: 10px 0; margin: -10px 0; text-decoration: none">Gizlilik (Datenschutz)</a>
+<nav aria-label="Alt menü"><p style="margin: 0 0 10px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #B9C9C3">Sayfalar</p><ul style="list-style: none; margin: 0; padding: 0"><li><a href="#top" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">Ana sayfa</a></li><li><a href="#hakkimizda" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">Hakkımızda</a></li><li><a href="#sss" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">SSS</a></li><li><a href="blog/" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">Blog</a></li><li><a href="#iletisim" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">İletişim</a></li></ul></nav>
+<div><p style="margin: 0 0 10px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #B9C9C3">İletişim</p><ul style="list-style: none; margin: 0; padding: 0">
+<li><a href="https://wa.me/905419713092" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">WhatsApp</a></li>
+<li><a href="mailto:hasatozelegitim@gmail.com" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">E-posta</a></li>
+<li><a href="tel:+905419713092" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none; white-space: nowrap">+90 541 971 30 92</a></li>
+</ul></div>
+<nav aria-label="Yasal"><p style="margin: 0 0 10px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #B9C9C3">Yasal</p><ul style="list-style: none; margin: 0; padding: 0"><li><a href="kunye/" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">Künye</a></li><li><a href="gizlilik/" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none">Gizlilik</a></li></ul></nav>
+</div>
+<div style="margin-top: clamp(40px, 5vw, 56px); padding-top: 20px; border-top: 1px solid rgba(185,201,195,0.22); display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; align-items: center; font-size: 14px; color: #B9C9C3">
 <span>© 2026 Hasat Özel Eğitim</span>
-</nav>
+<a href="#top" style="display: inline-block; padding: 6px 0; color: #C5D3CE; text-decoration: none; color: #B9C9C3">Başa dön ↑</a>
+</div>
 </div>
 </footer>
 
@@ -412,7 +418,7 @@ document.querySelectorAll('.mob-menu a').forEach(function (a) {
   if (!('IntersectionObserver' in window)) { s.unpauseAnimations(); return; }
   var io = new IntersectionObserver(function (e) {
     if (e[0].isIntersecting) { s.setCurrentTime(0); s.unpauseAnimations(); io.disconnect(); }
-  }, { threshold: 0.6 });
+  }, { threshold: 0.35 });
   io.observe(s);
 })();
 </script>

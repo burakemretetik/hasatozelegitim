@@ -135,7 +135,7 @@ document.querySelectorAll('.mob-menu a').forEach(function (a) {
   if (!('IntersectionObserver' in window)) { s.unpauseAnimations(); return; }
   var io = new IntersectionObserver(function (e) {
     if (e[0].isIntersecting) { s.setCurrentTime(0); s.unpauseAnimations(); io.disconnect(); }
-  }, { threshold: 0.6 });
+  }, { threshold: 0.35 });
   io.observe(s);
 })();
 </script>"""
