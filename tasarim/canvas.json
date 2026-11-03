@@ -1,0 +1,20 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-10-27T12:00:00Z" },
+  "title": "Hasat Özel Eğitim Website",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 5600, "title": "Ana sayfa · Türkçe", "expand": "fill", "is_interactive": true },
+    "Deutsch.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 5800, "title": "Startseite · Deutsch", "expand": "fill", "is_interactive": true },
+    "Blog.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 2300, "title": "Blog · Yazılar", "expand": "fill", "is_interactive": true },
+    "BlogYazi.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 3400, "title": "Blog · Yazı sayfası", "expand": "fill", "is_interactive": true },
+    "BlogDe.dc.html": { "x": 3040, "y": 2420, "w": 1440, "h": 2300, "title": "Blog · Beiträge (DE)", "expand": "fill", "is_interactive": true },
+    "BlogYaziDe.dc.html": { "x": 4560, "y": 3520, "w": 1440, "h": 3500, "title": "Blog · Beitrag (DE)", "expand": "fill", "is_interactive": true }
+,
+    "Logo.dc.html": { "x": -1560, "y": 0, "w": 1440, "h": 1040, "title": "Logo" }
+  },
+  "order": ["Main.dc.html", "Deutsch.dc.html", "Blog.dc.html", "BlogYazi.dc.html", "BlogDe.dc.html", "BlogYaziDe.dc.html", "Logo.dc.html"],
+  "notes": {},
+  "designSystems": []
+}
