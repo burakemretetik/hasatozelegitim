@@ -187,6 +187,15 @@
       "title": "Hakkımızda · illüstrasyon önerileri",
       "expand": "fill",
       "is_interactive": true
+    },
+    "IletisimOneri.dc.html": {
+      "x": -1560,
+      "y": 2180,
+      "w": 1440,
+      "h": 3400,
+      "title": "İletişim · illüstrasyon önerileri",
+      "expand": "fill",
+      "is_interactive": true
     }
   },
   "order": [
@@ -209,7 +218,8 @@
     "Gizlilik.dc.html",
     "Datenschutz.dc.html",
     "Logo.dc.html",
-    "IllustrasyonOneri.dc.html"
+    "IllustrasyonOneri.dc.html",
+    "IletisimOneri.dc.html"
   ],
   "notes": {},
   "designSystems": []
