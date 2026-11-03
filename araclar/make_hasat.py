@@ -64,7 +64,7 @@ def mark(x, y, s, square):
     g = ORANGE
     return (
         f'<g transform="translate({p(x)} {p(y)}) scale({p(s)})">'
-        f'<path d="M20 38.5 V12" fill="none" stroke="{square}" stroke-width="1.8" stroke-linecap="round"/>'
+        f'<path d="M20 38.5 V13.5" fill="none" stroke="{square}" stroke-width="1.1" stroke-linecap="round"/>'
         + "".join(
             f'<path transform="translate({cx} {cy}) rotate({r})" d="{GRAIN}" fill="{g}"/>'
             for cx, cy, r in [(20, 6.5, 0), (16.2, 12.9, -32), (23.8, 12.9, 32), (16.2, 19.4, -32),
