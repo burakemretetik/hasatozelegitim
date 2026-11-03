@@ -24,6 +24,18 @@ PAGES = {
         "Beiträge zu Autismus, Legasthenie, Zweisprachigkeit und Förderung zu Hause."),
     "BlogYaziDe.dc.html": ("de/blog/online-foerderstunde.html", "de",
         "Kleine, aber wirkungsvolle Vorbereitungen, damit Ihr Kind die Online-Förderstunde bestmöglich nutzen kann."),
+    "BlogOtizm.dc.html": ("blog/otizmde-erken-belirtiler.html", "tr",
+        "Otizmin erken belirtileri: sosyal iletişim, dil gelişimi ve tekrarlayan davranışlarda nelere dikkat etmeli, endişelendiğinizde kime başvurmalı?"),
+    "BlogIkiDil.dc.html": ("blog/iki-dilli-buyumek.html", "tr",
+        "Yurt dışında yaşayan aileler için: İki dillilik dil gelişimini geciktirmez. Otizmli çocuklarda da evde Türkçe konuşmaya devam etmek için nedenler ve öneriler."),
+    "BlogOtizmDe.dc.html": ("de/blog/fruehe-anzeichen-autismus.html", "de",
+        "Frühe Anzeichen von Autismus: worauf Eltern bei sozialer Kommunikation, Sprache und wiederholendem Verhalten achten können und an wen sie sich wenden."),
+    "BlogIkiDilDe.dc.html": ("de/blog/zweisprachig-aufwachsen.html", "de",
+        "Zweisprachigkeit verzögert die Sprachentwicklung nicht – auch nicht bei Kindern im Autismus-Spektrum. Warum sich die Familiensprache lohnt und was Sie zu Hause tun können."),
+    "Kunye.dc.html": ("kunye/index.html", "tr", "Hasat Özel Eğitim künye bilgileri."),
+    "Gizlilik.dc.html": ("gizlilik/index.html", "tr", "Hasat Özel Eğitim gizlilik ve kişisel verilerin korunması metni (KVKK ve GDPR)."),
+    "Impressum.dc.html": ("de/impressum/index.html", "de", "Impressum von Hasat Özel Eğitim."),
+    "Datenschutz.dc.html": ("de/datenschutz/index.html", "de", "Datenschutzerklärung von Hasat Özel Eğitim (DSGVO und KVKK)."),
 }
 
 # Only these articles exist. Cards for other titles are left out of the home page and
@@ -31,7 +43,28 @@ PAGES = {
 REAL_TITLES = {
     "Online özel eğitim dersine evde nasıl hazırlanılır?",
     "Wie bereite ich mein Kind zu Hause auf die Online-Förderstunde vor?",
+    "Otizmde erken belirtiler: Ailelerin dikkat etmesi gerekenler",
+    "Yurt dışında iki dilli büyümek: Evde Türkçe konuşmaya devam etmeli miyim?",
+    "Frühe Anzeichen von Autismus: Worauf Eltern achten sollten",
+    "Zweisprachig aufwachsen: Soll ich zu Hause weiter Türkisch sprechen?",
 }
+# artboard of each published article, used for links on the blog list page
+POST_PAGE = {
+    "Online özel eğitim dersine evde nasıl hazırlanılır?": "BlogYazi.dc.html",
+    "Wie bereite ich mein Kind zu Hause auf die Online-Förderstunde vor?": "BlogYaziDe.dc.html",
+    "Otizmde erken belirtiler: Ailelerin dikkat etmesi gerekenler": "BlogOtizm.dc.html",
+    "Yurt dışında iki dilli büyümek: Evde Türkçe konuşmaya devam etmeli miyim?": "BlogIkiDil.dc.html",
+    "Frühe Anzeichen von Autismus: Worauf Eltern achten sollten": "BlogOtizmDe.dc.html",
+    "Zweisprachig aufwachsen: Soll ich zu Hause weiter Türkisch sprechen?": "BlogIkiDilDe.dc.html",
+}
+
+# fonts are served from this site (no request to Google's servers)
+FONT_LINK_RE = re.compile(r'<link rel="stylesheet" href="https://fonts\.googleapis\.com/[^"]*">')
+def font_css(prefix):
+    return ("<style>"
+            f"@font-face{{font-family:'Bricolage Grotesque';src:url('{prefix}assets/fonts/bricolage-grotesque.woff2') format('woff2');font-weight:500 700;font-style:normal;font-display:swap}}"
+            f"@font-face{{font-family:'Inter';src:url('{prefix}assets/fonts/inter.woff2') format('woff2');font-weight:400 600;font-style:normal;font-display:swap}}"
+            "</style>")
 UPCOMING = {
     "tr": ("Hazırlanan yazılar", "Bu yazılar hazırlanıyor; yakında burada yayımlanacak."),
     "de": ("Beiträge in Vorbereitung", "Diese Beiträge werden gerade vorbereitet und erscheinen in Kürze hier."),
@@ -141,7 +174,7 @@ def build_blog_list(content, lang):
         card = (card_tpl.replace("{{ p.cat }}", cat)
                         .replace("{{ p.title }}", title)
                         .replace("{{ p.excerpt }}", excerpt))
-        card = card.replace("<a href=", f'<a data-cat="{html.escape(cat)}" href=', 1)
+        card = re.sub(r'<a href="[^"]+"', f'<a data-cat="{html.escape(cat)}" href="{POST_PAGE[title]}"', card, count=1)
         cards.append(card)
 
     n = len(rest)
@@ -235,7 +268,10 @@ def convert(src_name, out_path, lang, desc):
     assert not leftovers, f"{src_name}: unconverted markup {set(leftovers)}"
 
     depth_prefix = os.path.relpath(".", os.path.dirname(out_path) or ".")
-    favicon_href = ("" if depth_prefix == "." else depth_prefix + "/") + "favicon.svg"
+    prefix = "" if depth_prefix == "." else depth_prefix + "/"
+    favicon_href = prefix + "favicon.svg"
+    assert len(FONT_LINK_RE.findall(helmet)) == 1, f"{src_name}: font link not found"
+    helmet = FONT_LINK_RE.sub(lambda m: font_css(prefix), helmet)
     alt_tr = alt_de = None
     page = f"""<!doctype html>
 <html lang="{lang}">
@@ -249,8 +285,7 @@ def convert(src_name, out_path, lang, desc):
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#12312B">
 <link rel="icon" href="{favicon_href}" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="{prefix}assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 {helmet}
 <style>[hidden]{{display:none !important}}html{{scroll-behavior:smooth}}</style>
 </head>

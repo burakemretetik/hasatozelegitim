@@ -13,6 +13,12 @@ Canlı adres: https://burakemretetik.github.io/hasatozelegitim/
 | Blog yazısı (TR) | `blog/online-ders-hazirligi.html` |
 | Blog (DE) | `de/blog/index.html` |
 | Blog-Beitrag (DE) | `de/blog/online-foerderstunde.html` |
+| Yazı: Otizmde erken belirtiler | `blog/otizmde-erken-belirtiler.html` |
+| Yazı: İki dilli büyümek | `blog/iki-dilli-buyumek.html` |
+| Beitrag: Frühe Anzeichen von Autismus | `de/blog/fruehe-anzeichen-autismus.html` |
+| Beitrag: Zweisprachig aufwachsen | `de/blog/zweisprachig-aufwachsen.html` |
+| Künye / Gizlilik | `kunye/`, `gizlilik/` |
+| Impressum / Datenschutz | `de/impressum/`, `de/datenschutz/` |
 
 ## Klasörler
 
@@ -49,4 +55,4 @@ Canlı adres: https://burakemretetik.github.io/hasatozelegitim/
 | Açık panel | `#E3ECE7` |
 | Çizgiler | `#D9E0DC` / `#C9D3CE` |
 
-Başlıklar: Bricolage Grotesque (650). Metin: Inter. İkisi de Google Fonts'tan yüklenir.
+Başlıklar: Bricolage Grotesque (650). Metin: Inter. Yayındaki sitede ikisi de `assets/fonts/` klasöründen (Türkçe/Almanca alt kümesi, WOFF2, OFL lisanslı) yüklenir; Google'a istek gitmez. Tuval Google Fonts kullanır, derleme betiği bunu değiştirir.

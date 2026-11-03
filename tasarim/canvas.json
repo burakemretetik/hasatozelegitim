@@ -1,20 +1,166 @@
 {
   "v": 3,
-  "createdOnFiles": { "v": 1, "at": "2026-10-27T12:00:00Z" },
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-27T12:00:00Z"
+  },
   "title": "Hasat Özel Eğitim Website",
-  "launch": { "view": "canvas" },
+  "launch": {
+    "view": "canvas"
+  },
   "pages": [],
   "boards": {
-    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 5600, "title": "Ana sayfa · Türkçe", "expand": "fill", "is_interactive": true },
-    "Deutsch.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 5800, "title": "Startseite · Deutsch", "expand": "fill", "is_interactive": true },
-    "Blog.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 2300, "title": "Blog · Yazılar", "expand": "fill", "is_interactive": true },
-    "BlogYazi.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 3400, "title": "Blog · Yazı sayfası", "expand": "fill", "is_interactive": true },
-    "BlogDe.dc.html": { "x": 3040, "y": 2420, "w": 1440, "h": 2300, "title": "Blog · Beiträge (DE)", "expand": "fill", "is_interactive": true },
-    "BlogYaziDe.dc.html": { "x": 4560, "y": 3520, "w": 1440, "h": 3500, "title": "Blog · Beitrag (DE)", "expand": "fill", "is_interactive": true }
-,
-    "Logo.dc.html": { "x": -1560, "y": 0, "w": 1440, "h": 1040, "title": "Logo" }
+    "Main.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 5600,
+      "title": "Ana sayfa · Türkçe",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Deutsch.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 1440,
+      "h": 5800,
+      "title": "Startseite · Deutsch",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Blog.dc.html": {
+      "x": 3040,
+      "y": 0,
+      "w": 1440,
+      "h": 2300,
+      "title": "Blog · Yazılar",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogYazi.dc.html": {
+      "x": 4560,
+      "y": 0,
+      "w": 1440,
+      "h": 3400,
+      "title": "Blog · Yazı sayfası",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogDe.dc.html": {
+      "x": 3040,
+      "y": 2420,
+      "w": 1440,
+      "h": 2300,
+      "title": "Blog · Beiträge (DE)",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogYaziDe.dc.html": {
+      "x": 4560,
+      "y": 3520,
+      "w": 1440,
+      "h": 3500,
+      "title": "Blog · Beitrag (DE)",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Logo.dc.html": {
+      "x": -1560,
+      "y": 0,
+      "w": 1440,
+      "h": 1040,
+      "title": "Logo"
+    },
+    "BlogOtizm.dc.html": {
+      "x": 6080,
+      "y": 0,
+      "w": 1440,
+      "h": 4300,
+      "title": "Blog · Otizmde erken belirtiler",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogOtizmDe.dc.html": {
+      "x": 6080,
+      "y": 4420,
+      "w": 1440,
+      "h": 4500,
+      "title": "Blog · Frühe Anzeichen (DE)",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogIkiDil.dc.html": {
+      "x": 7600,
+      "y": 0,
+      "w": 1440,
+      "h": 4300,
+      "title": "Blog · İki dilli büyümek",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BlogIkiDilDe.dc.html": {
+      "x": 7600,
+      "y": 4420,
+      "w": 1440,
+      "h": 4500,
+      "title": "Blog · Zweisprachig (DE)",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Kunye.dc.html": {
+      "x": 9120,
+      "y": 0,
+      "w": 1440,
+      "h": 2200,
+      "title": "Künye",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Impressum.dc.html": {
+      "x": 9120,
+      "y": 2320,
+      "w": 1440,
+      "h": 2300,
+      "title": "Impressum (DE)",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Gizlilik.dc.html": {
+      "x": 10640,
+      "y": 0,
+      "w": 1440,
+      "h": 4300,
+      "title": "Gizlilik",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "Datenschutz.dc.html": {
+      "x": 10640,
+      "y": 4420,
+      "w": 1440,
+      "h": 4500,
+      "title": "Datenschutz (DE)",
+      "expand": "fill",
+      "is_interactive": true
+    }
   },
-  "order": ["Main.dc.html", "Deutsch.dc.html", "Blog.dc.html", "BlogYazi.dc.html", "BlogDe.dc.html", "BlogYaziDe.dc.html", "Logo.dc.html"],
+  "order": [
+    "Main.dc.html",
+    "Deutsch.dc.html",
+    "Blog.dc.html",
+    "BlogYazi.dc.html",
+    "BlogDe.dc.html",
+    "BlogYaziDe.dc.html",
+    "BlogOtizm.dc.html",
+    "BlogOtizmDe.dc.html",
+    "BlogIkiDil.dc.html",
+    "BlogIkiDilDe.dc.html",
+    "Kunye.dc.html",
+    "Impressum.dc.html",
+    "Gizlilik.dc.html",
+    "Datenschutz.dc.html",
+    "Logo.dc.html"
+  ],
   "notes": {},
   "designSystems": []
 }
