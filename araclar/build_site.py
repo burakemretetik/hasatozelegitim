@@ -455,9 +455,79 @@ def convert(src_name, out_path, lang, desc):
     print(f"{src_name:22s} -> {out_path}")
 
 
+# ---------------------------------------------------------------- 404 page
+# GitHub Pages serves one 404.html for every missing address, at any depth, so this page
+# uses root-relative URLs. It carries both languages; addresses under /de/ show German.
+NOT_FOUND = {"tr": "Bulunamadi.dc.html", "de": "BulunamadiDe.dc.html"}
+
+
+def build_404():
+    from urllib.parse import urlparse
+    base = urlparse(SITE_URL).path or "/"
+
+    def abs_href(m):
+        out = PAGES[m.group(1)][0]
+        if out.endswith("index.html"):
+            out = out[: -len("index.html")]
+        return f'href="{base}{out}{m.group(2) or ""}"'
+
+    parts, titles, helmet = {}, {}, None
+    for lang, name in NOT_FOUND.items():
+        src = open(os.path.join(SRC, name), encoding="utf-8").read()
+        titles[lang] = re.search(r"<title>(.*?)</title>", src, re.S).group(1).strip()
+        xdc = re.search(r"<x-dc>(.*)</x-dc>", src, re.S).group(1)
+        h = re.search(r"<helmet>(.*?)</helmet>", xdc, re.S).group(1).strip()
+        content = re.sub(r"<helmet>.*?</helmet>", "", xdc, count=1, flags=re.S).strip()
+        content = content.replace("{{accent}}", ACCENT)
+        content = re.sub(r'href="([A-Za-z]+\.dc\.html)(#[^"]*)?"', abs_href, content)
+        assert not re.findall(r"\{\{|\.dc\.html", content), f"{name}: unconverted markup"
+        parts[lang] = content
+        if helmet is None:
+            helmet = FONT_LINK_RE.sub(lambda m: font_css(base), h.replace("{{accent}}", ACCENT))
+    page = f"""<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{titles["tr"]}</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#12312B">
+<link rel="icon" href="{base}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{base}assets/apple-touch-icon.png">
+<link rel="preload" href="{base}assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+{helmet}
+<style>[hidden]{{display:none !important}}html{{scroll-behavior:smooth}}</style>
+</head>
+<body>
+<div data-lang="tr">
+{parts["tr"]}
+</div>
+<div data-lang="de" lang="de" hidden>
+{parts["de"]}
+</div>
+<script>
+(function () {{
+  var de = location.pathname.indexOf({json.dumps(base + "de/")}) === 0;
+  var keep = document.querySelector('[data-lang="' + (de ? 'de' : 'tr') + '"]');
+  var drop = document.querySelector('[data-lang="' + (de ? 'tr' : 'de') + '"]');
+  drop.parentNode.removeChild(drop);
+  keep.hidden = false;
+  if (de) {{ document.documentElement.lang = 'de'; document.title = {json.dumps(titles["de"], ensure_ascii=False)}; }}
+}})();
+</script>
+{MENU_SCRIPT}
+</body>
+</html>
+"""
+    with open(os.path.join(OUT, "404.html"), "w", encoding="utf-8") as f:
+        f.write(page)
+    print(f"{'404 (tr + de)':22s} -> 404.html")
+
+
 os.makedirs(OUT, exist_ok=True)
 for name, (out_path, lang, desc) in PAGES.items():
     convert(name, out_path, lang, desc)
+build_404()
 with open(os.path.join(OUT, "favicon.svg"), "w", encoding="utf-8") as f:
     f.write(FAVICON)
 open(os.path.join(OUT, ".nojekyll"), "w").close()

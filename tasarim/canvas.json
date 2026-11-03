@@ -196,6 +196,24 @@
       "title": "İletişim · illüstrasyon önerileri",
       "expand": "fill",
       "is_interactive": true
+    },
+    "Bulunamadi.dc.html": {
+      "x": 15200,
+      "y": 0,
+      "w": 1440,
+      "h": 1500,
+      "title": "404 · Sayfa bulunamadı",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "BulunamadiDe.dc.html": {
+      "x": 15200,
+      "y": 1620,
+      "w": 1440,
+      "h": 1500,
+      "title": "404 · Seite nicht gefunden (DE)",
+      "expand": "fill",
+      "is_interactive": true
     }
   },
   "order": [
@@ -217,6 +235,8 @@
     "Impressum.dc.html",
     "Gizlilik.dc.html",
     "Datenschutz.dc.html",
+    "Bulunamadi.dc.html",
+    "BulunamadiDe.dc.html",
     "Logo.dc.html",
     "IllustrasyonOneri.dc.html",
     "IletisimOneri.dc.html"
