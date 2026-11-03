@@ -34,7 +34,8 @@ Canlı adres: https://burakemretetik.github.io/hasatozelegitim/
    python3 araclar/build_site.py tasarim .
    ```
 3. Yeni bir blog yazısı eklerken: yazı sayfası için yeni artboard oluşturun, `build_site.py` içindeki
-   `PAGES`, `POSTS` ve `REAL_TITLES` listelerine ekleyin.
+   `PAGES`, `POSTS` ve `REAL_TITLES` listelerine ekleyin. `REAL_TITLES` içinde olmayan yazılar ana sayfada ve
+   yazı sonlarında gösterilmez; blog sayfasında "Hazırlanan yazılar" listesinde bağlantısız olarak görünür.
 4. Commit edip `main`'e push'layın; GitHub Pages birkaç dakika içinde yayınlar.
 
 ## Renkler ve yazı tipleri
