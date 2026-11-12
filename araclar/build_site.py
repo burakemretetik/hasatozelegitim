@@ -30,6 +30,7 @@ PAIRS = {
     "BlogIkiDil.dc.html": "BlogIkiDilDe.dc.html",
     "BlogDisleksi.dc.html": "BlogDisleksiDe.dc.html",
     "BlogRutin.dc.html": "BlogRutinDe.dc.html",
+    "HanifeTetik.dc.html": "HanifeTetikDe.dc.html",
     "Kunye.dc.html": "Impressum.dc.html",
     "Gizlilik.dc.html": "Datenschutz.dc.html",
 }
@@ -47,9 +48,9 @@ HOME_PAGES = {"Main.dc.html", "Deutsch.dc.html"}
 # source artboard -> output path, language, description
 PAGES = {
     "Main.dc.html": ("index.html", "tr",
-        "Otizm, özel öğrenme güçlüğü ve gecikmiş konuşma alanında online özel eğitim ve aile danışmanlığı. Özel eğitim uzmanı Hanife Tetik ile, Türkiye'den ya da yurt dışından."),
+        "Otizm, özel öğrenme güçlüğü ve gecikmiş konuşma alanında yüz yüze ve online özel eğitim ve aile danışmanlığı. Özel eğitim uzmanı Hanife Tetik ile, Türkiye'den ya da yurt dışından."),
     "Deutsch.dc.html": ("de/index.html", "de",
-        "Förderung bei Autismus, Lernstörungen und verzögerter Sprachentwicklung – online. Einzelstunden und Elternberatung mit der Sonderpädagogin Hanife Tetik."),
+        "Förderung bei Autismus, Lernstörungen und verzögerter Sprachentwicklung – vor Ort in Aydın und online. Einzelstunden und Elternberatung mit der Sonderpädagogin Hanife Tetik."),
     "Blog.dc.html": ("blog/index.html", "tr",
         "Otizm, disleksi, iki dillilik ve evde destek üzerine ailelere yol gösteren yazılar."),
     "BlogYazi.dc.html": ("blog/online-ders-hazirligi.html", "tr",
@@ -74,8 +75,12 @@ PAGES = {
         "Erste Anzeichen von Legasthenie vor und nach dem Schulstart, Besonderheiten bei zweisprachigen Kindern und der Weg zur Diagnose in Deutschland und der Türkei."),
     "BlogRutinDe.dc.html": ("de/blog/feste-tagesablaeufe.html", "de",
         "Ein vorhersehbarer Tag gibt Kindern im Autismus-Spektrum Sicherheit. Praktische Tipps zu visuellen Tagesplänen, Übergängen und Flexibilität."),
+    "HanifeTetik.dc.html": ("ekip/hanife-tetik/index.html", "tr",
+        "Hanife Tetik, Ankara Üniversitesi Özel Eğitim Bölümü mezunu özel eğitim uzmanı: eğitim, mesleki deneyim ve aldığı eğitimler."),
     "Kunye.dc.html": ("kunye/index.html", "tr", "Hasat Özel Eğitim künye bilgileri."),
     "Gizlilik.dc.html": ("gizlilik/index.html", "tr", "Hasat Özel Eğitim gizlilik ve kişisel verilerin korunması metni (KVKK ve GDPR)."),
+    "HanifeTetikDe.dc.html": ("de/team/hanife-tetik/index.html", "de",
+        "Hanife Tetik, Sonderpädagogin (Universität Ankara): Ausbildung, Berufserfahrung und Fortbildungen."),
     "Impressum.dc.html": ("de/impressum/index.html", "de", "Impressum von Hasat Özel Eğitim."),
     "Datenschutz.dc.html": ("de/datenschutz/index.html", "de", "Datenschutzerklärung von Hasat Özel Eğitim (DSGVO und KVKK)."),
 }

@@ -223,6 +223,24 @@
       "title": "TASLAK · Blog · Almanya'da otizm rehberi",
       "expand": "fill",
       "is_interactive": true
+    },
+    "HanifeTetik.dc.html": {
+      "x": 18240,
+      "y": 0,
+      "w": 1440,
+      "h": 2600,
+      "title": "Hanife Tetik · Profil",
+      "expand": "fill",
+      "is_interactive": true
+    },
+    "HanifeTetikDe.dc.html": {
+      "x": 18240,
+      "y": 2720,
+      "w": 1440,
+      "h": 2600,
+      "title": "Hanife Tetik · Profil (DE)",
+      "expand": "fill",
+      "is_interactive": true
     }
   },
   "order": [
@@ -247,6 +265,8 @@
     "Datenschutz.dc.html",
     "Bulunamadi.dc.html",
     "BulunamadiDe.dc.html",
+    "HanifeTetik.dc.html",
+    "HanifeTetikDe.dc.html",
     "Logo.dc.html",
     "IllustrasyonOneri.dc.html",
     "IletisimOneri.dc.html"
