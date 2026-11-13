@@ -1,0 +1,4 @@
+node_modules/
+.preview/
+.bundle-cache/
+*.log
