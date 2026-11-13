@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
-import {COL, EASE, EASE_OUT, kf, morphPath, prog} from '../theme';
+import {COL, EASE, EASE_OUT, prog} from '../theme';
 import {Grid, Line} from '../parts';
 import {IN} from '../timeline';
 
@@ -14,16 +14,13 @@ export const Close: React.FC = () => {
   const frameP = prog(f, IN - 4, 26, EASE);
   const per = 4 * HALF * 2;
   const innerP = prog(f, IN + 12, 16, EASE_OUT);
-  // calm morph cycle inside the frame: circle → square → triangle → circle
+  // calm morph cycle inside the frame: circle → square → circle → square, each in a 90° step
   const t1 = prog(f, IN + 40, 28, EASE);
   const t2 = prog(f, IN + 96, 28, EASE);
   const t3 = prog(f, IN + 152, 28, EASE);
-  let d: string;
-  const r = 150 * innerP;
-  if (t2 === 0) d = morphPath('circle', 'square', t1, CX, CY, r);
-  else if (t3 === 0) d = morphPath('square', 'triangle', t2, CX, CY + 18 * t2, r);
-  else d = morphPath('triangle', 'circle', t3, CX, CY + 18 * (1 - t3), r);
-  const rot = kf(f, [IN + 40, IN + 68], [0, 0]);
+  const round = 1 - t1 + t2 - t3;
+  const rot = 90 * (t1 + t2 + t3);
+  const half = 150 * innerP;
 
   return (
     <AbsoluteFill style={{background: COL.ink}}>
@@ -40,7 +37,15 @@ export const Close: React.FC = () => {
           strokeDasharray={per}
           strokeDashoffset={per * (1 - frameP)}
         />
-        <path d={d} fill={COL.orange} transform={`rotate(${rot} ${CX} ${CY})`} />
+        <rect
+          x={CX - half}
+          y={CY - half}
+          width={half * 2}
+          height={half * 2}
+          rx={half * round}
+          fill={COL.orange}
+          transform={`rotate(${rot} ${CX} ${CY})`}
+        />
       </svg>
 
       <div style={{position: 'absolute', left: 80, top: 890}}>

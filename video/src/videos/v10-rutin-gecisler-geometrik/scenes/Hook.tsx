@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
-import {COL, EASE, EASE_OUT, kf, mix, prog} from '../theme';
+import {COL, EASE, EASE_OUT, kf, prog} from '../theme';
 import {Grid, Line} from '../parts';
 
 /**
@@ -16,13 +16,13 @@ export const Hook: React.FC = () => {
   const round = kf(f, K, [1, 1, 0.64, 0.82, 0.32, 0.46, 0]); // 1 = circle, 0 = square
   const sx = kf(f, K, [1, 1, 1.16, 0.95, 1.13, 0.97, 1]);
   const sy = kf(f, K, [1, 1, 0.88, 1.03, 0.9, 1.02, 1]);
-  const colorT = prog(f, 118, 26, EASE);
-  const fill = mix(colorT, COL.orange, COL.ink);
+  const fill = COL.orange;
+  const ghostP = prog(f, 52, 20, EASE_OUT); // outline of A stays behind once it leaves
   const S = 300; // shape size
   const cy = 560;
 
   // slot outline + arrow
-  const slotP = prog(f, 0, 14, EASE_OUT);
+  const slotP = 0.6 + 0.4 * prog(f, 0, 14, EASE_OUT);
   const arrowOut = prog(f, 96, 18, EASE); // arrow retracts as the shape passes
   const lockP = prog(f, 146, 14, EASE_OUT);
 
@@ -72,7 +72,7 @@ export const Hook: React.FC = () => {
               top: cy + dy * off - 14,
               width: 28,
               height: 28,
-              background: COL.orange,
+              background: COL.ink,
               transform: `scale(${lockP})`,
             }}
           />
@@ -87,6 +87,21 @@ export const Hook: React.FC = () => {
         </g>
       </svg>
 
+      {/* ghost of A */}
+      <div
+        style={{
+          position: 'absolute',
+          left: 262 - S / 2,
+          top: cy - S / 2,
+          width: S,
+          height: S,
+          boxSizing: 'border-box',
+          borderRadius: '50%',
+          border: `6px solid ${COL.orange}`,
+          opacity: ghostP,
+          transform: `scale(${0.8 + 0.2 * ghostP})`,
+        }}
+      />
       {/* the straining shape */}
       <div
         style={{
@@ -119,7 +134,7 @@ export const Hook: React.FC = () => {
               left: -80,
               top: 6,
               height: 168,
-              width: 80 + 790 * prog(f, 14, 18, EASE),
+              width: 870 * prog(f, 14, 18, EASE),
               background: COL.orange,
             }}
           />

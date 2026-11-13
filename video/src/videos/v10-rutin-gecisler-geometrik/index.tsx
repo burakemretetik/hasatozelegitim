@@ -16,7 +16,7 @@ import {Outro} from './scenes/Outro';
 export const meta = {
   id: 'v10',
   durationInFrames: TOTAL,
-  coverFrame: 160,
+  coverFrame: 300,
 };
 
 const SCENES: Record<SceneKey, {C: React.FC; bar: string; reverse?: boolean}> = {

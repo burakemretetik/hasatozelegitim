@@ -13,13 +13,13 @@ export const Outro: React.FC = () => {
     {kind: 'triangle', color: COL.brick},
     {kind: 'square', color: COL.ink},
   ] as const;
-  const logoP = prog(f, IN + 8, 22, EASE);
+  const logoP = prog(f, IN - 4, 22, EASE);
 
   return (
     <AbsoluteFill style={{background: COL.paper}}>
       <Grid color={COL.ink} opacity={0.12} at={IN - 8} />
       {shapes.map((s, i) => {
-        const p = prog(f, IN - 4 + i * 5, 18, EASE);
+        const p = prog(f, IN - 10 + i * 4, 18, EASE);
         const size = 110;
         const x = 540 - 1.5 * size - 40 + i * (size + 40);
         return (
@@ -30,10 +30,10 @@ export const Outro: React.FC = () => {
             viewBox="0 0 100 100"
             style={{
               position: 'absolute',
-              left: x + (1 - p) * -200,
+              left: x + (1 - p) * -(120 + i * 40),
               top: 560,
               opacity: p > 0 ? 1 : 0,
-              transform: `rotate(${(1 - p) * -180}deg)`,
+              transform: `rotate(${(1 - p) * -90}deg)`,
             }}
           >
             {s.kind === 'circle' && <circle cx={50} cy={50} r={50} fill={s.color} />}
@@ -53,7 +53,7 @@ export const Outro: React.FC = () => {
         <HasatLogo width={720} />
       </div>
       <div style={{position: 'absolute', left: 0, right: 0, top: 1190, display: 'flex', justifyContent: 'center', fontFamily: FF}}>
-        <Line at={IN + 26} size={60} weight={500}>
+        <Line at={IN + 2} size={60} weight={500}>
           Yazının tamamı blogumuzda.
         </Line>
       </div>

@@ -1,13 +1,12 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
-import {COL, EASE, EASE_OUT, FF, prog} from '../theme';
+import {COL, EASE, prog} from '../theme';
 import {Grid, Line} from '../parts';
 import {IN} from '../timeline';
 
 /** Title – "Geçişleri kolaylaştırmak için / 3 öneri". Green poster, giant orange 3. */
 export const Title: React.FC = () => {
   const f = useCurrentFrame();
-  const threeP = prog(f, IN + 10, 22, EASE_OUT);
 
   // the three tip-shapes drop onto the grid one by one
   const shapes = [
@@ -28,23 +27,11 @@ export const Title: React.FC = () => {
         </Line>
       </div>
 
-      {/* giant 3 */}
-      <div
-        style={{
-          position: 'absolute',
-          left: 40,
-          top: 540,
-          fontFamily: FF,
-          fontWeight: 800,
-          fontSize: 1040,
-          lineHeight: 0.8,
-          letterSpacing: '-0.04em',
-          color: COL.orange,
-          clipPath: `inset(${(1 - threeP) * 100}% 0 0 0)`,
-          transform: `translateY(${(1 - threeP) * 120}px)`,
-        }}
-      >
-        3
+      {/* giant 3 – rises out of a fixed mask like every other line of type */}
+      <div style={{position: 'absolute', left: 40, top: 540}}>
+        <Line at={IN + 8} size={1040} weight={800} lh={0.8} color={COL.orange} track={-40} dur={24}>
+          3
+        </Line>
       </div>
       <div style={{position: 'absolute', left: 640, top: 1240}}>
         <Line at={IN + 22} size={150} weight={600} color={COL.paper}>

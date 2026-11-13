@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
-import {COL, EASE, EASE_OUT, mix, morphPath, prog, ShapeKind} from '../theme';
+import {COL, EASE, EASE_OUT, morphPath, prog, ShapeKind} from '../theme';
 import {Grid, Line, Rule} from '../parts';
 import {IN} from '../timeline';
 
@@ -44,14 +44,21 @@ export const Flex: React.FC = () => {
           const cy = Y0 + r * P;
           const p = prog(f, IN - 6 + (r + c) * 2.2, 14, EASE_OUT);
           const ch = CHANGES.find((k) => k.r === r && k.c === c);
-          let d = morphPath('circle', 'circle', 0, cx, cy, R * p);
-          let fill: string = COL.ink;
-          if (ch) {
-            const t = prog(f, ch.at, 30, EASE);
-            d = morphPath('circle', ch.to, t, cx, cy, R * p);
-            fill = mix(t, COL.ink, ch.color);
-          }
-          return <path key={i} d={d} fill={fill} />;
+          if (!ch) return <path key={i} d={morphPath('circle', 'circle', 0, cx, cy, R * p)} fill={COL.ink} />;
+          // gentle change: the form morphs while the new colour fills it from the bottom
+          const t = prog(f, ch.at, 30, EASE);
+          const tf = prog(f, ch.at + 6, 26, EASE);
+          const d = morphPath('circle', ch.to, t, cx, cy, R * p);
+          const id = `v10flex${i}`;
+          return (
+            <g key={i}>
+              <clipPath id={id}>
+                <rect x={cx - 70} y={cy + 66 - 132 * tf} width={140} height={132 * tf} />
+              </clipPath>
+              <path d={d} fill={COL.ink} />
+              <path d={d} fill={ch.color} clipPath={`url(#${id})`} />
+            </g>
+          );
         })}
         {/* "show it in advance": an outline preview frames the cell before it changes */}
         {CHANGES.map((ch, k) => {

@@ -10,7 +10,7 @@ export const DUR = {
   tip3: 160,
   flex: 360,
   close: 195,
-  outro: 100,
+  outro: 105,
 } as const;
 
 export type SceneKey = keyof typeof DUR;
