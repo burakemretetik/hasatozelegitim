@@ -58,11 +58,10 @@ export const MythTag: React.FC = () => (
 );
 
 /** Orange "DOĞRU" stamp. p: 0..1+ land spring. */
-export const FactTag: React.FC<{p: number}> = ({p}) => {
+export const FactTag: React.FC<{p: number; ring: number}> = ({p, ring}) => {
   const k = Math.max(0, p);
   const scale = 1 + (1 - Math.min(k, 1.2)) * 0.9;
   const op = Math.min(1, k * 3.5);
-  const ring = Math.max(0, Math.min(1, (k - 0.75) * 2.2));
   return (
     <div style={{position: 'relative', display: 'inline-block', transform: `rotate(${-4 - (1 - Math.min(k, 1)) * 9}deg) scale(${scale})`, transformOrigin: '30% 50%', opacity: op}}>
       {/* ink ring that spreads once on impact */}
@@ -207,10 +206,10 @@ const HighlightLines: React.FC<{lines: Seg[][]; hl: number; markerColor: string;
   );
 };
 
-export const FactFace: React.FC<{card: CardText; stamp: number; hl: number}> = ({card, stamp, hl}) => (
+export const FactFace: React.FC<{card: CardText; stamp: number; ring: number; hl: number}> = ({card, stamp, ring, hl}) => (
   <Paper bg={FACT_BG}>
     <div style={{position: 'absolute', left: PAD, top: PAD - 4}}>
-      <FactTag p={stamp} />
+      <FactTag p={stamp} ring={ring} />
     </div>
     <div style={{position: 'absolute', left: PAD, right: PAD, top: 190, bottom: 150, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
       <HighlightLines

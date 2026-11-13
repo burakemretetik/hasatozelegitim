@@ -31,7 +31,7 @@ export const meta = {
   coverFrame: 236,
 };
 
-const DEBUG = true;
+const DEBUG = false;
 
 // ---------- layout ----------
 const CX = 540;
@@ -53,13 +53,13 @@ const cardPose = (frame: number, k: number): Pose => {
   const init: Pose = {x: f.x!, y: 2400, s: f.s!, r: f.r! * 2.6, ay: 0, blur: 6, dark: 0.14, op: 1};
   const steps: Step[] = [
     {at: FAN_IN + [0, 5, 9][k], to: {y: f.y, r: f.r}, p: sp({damping: 15, stiffness: 70})},
-    {at: GATHER + k * 3, to: {...slot(k)}, p: sp({damping: 18, stiffness: 85})},
+    {at: GATHER + k * 3, to: {...slot(k), blur: 14}, p: sp({damping: 18, stiffness: 85})},
     {at: COVER_OUT - 12, to: {blur: 0}, p: ez(10)},
     {at: FLIP[k] - 9, to: {ay: -9}, p: ez(9)},
     {at: FLIP[k], to: {ay: 180}, p: sp({damping: 12.5, stiffness: 100})},
     {at: OUT[k], to: {x: -820, y: CY + 80, r: -15}, p: ez(24, THROW)},
     {at: CLOSE_IN + k * 6, to: {...f, blur: 4.5, dark: 0.1}, p: sp({damping: 16, stiffness: 80})},
-    {at: OUTRO + 4 + k * 2, to: {...slot(k), blur: 6}, p: sp({damping: 18, stiffness: 85})},
+    {at: OUTRO + 4 + k * 2, to: {...slot(k), blur: 14}, p: sp({damping: 18, stiffness: 85})},
   ];
   for (let j = 0; j < k; j++) {
     steps.push({at: OUT[j] + 8 + (k - j - 1) * 3, to: slot(k - j - 1), p: sp({damping: 14, stiffness: 120})});
@@ -100,7 +100,7 @@ const TextBlock: React.FC<{
   <div style={{position: 'absolute', left: LEFT, top, fontFamily: FONT.heading, fontWeight: 650, fontSize: size, lineHeight: 1.1, letterSpacing: '-0.015em'}}>
     {lines.map((line, i) => {
       const pin = sp({damping: 20, stiffness: 120})(frame - (inAt + i * 4));
-      const pout = prog(frame, outAt + i * 2, 14, Easing.in(Easing.cubic));
+      const pout = prog(frame, outAt + i * 2, 12, Easing.in(Easing.cubic));
       return (
         <div
           key={i}
@@ -228,6 +228,7 @@ export const Video: React.FC = () => {
         const stampAt = FLIP[k] + STAMP_DELAY;
         const stamp = frame < stampAt ? 0 : sp({damping: 14, stiffness: 230})(frame - stampAt);
         const press = interpolate(frame, [stampAt + 3, stampAt + 6, stampAt + 16], [0, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        const ring = prog(frame, stampAt + 3, 16, Easing.out(Easing.quad));
         const hl = prog(frame, FLIP[k] + HL_DELAY, 26, Easing.inOut(Easing.cubic));
         return (
           <Card3D
@@ -236,7 +237,7 @@ export const Video: React.FC = () => {
             z={40 - k * 10}
             press={press}
             front={<MythFace card={card} strike={strike} />}
-            back={<FactFace card={card} stamp={stamp} hl={hl} />}
+            back={<FactFace card={card} stamp={stamp} ring={ring} hl={hl} />}
           />
         );
       })}

@@ -9,8 +9,8 @@ export const HOOK_OUT = 138;
 export const FAN_IN = 4;
 
 // Title cover card (6 words → ≥ 3.3 s). Lands ~f166.
-export const GATHER = 140;
-export const COVER_IN = 156;
+export const GATHER = 150;
+export const COVER_IN = 160;
 export const COVER_OUT = 282;
 export const COUNTER_IN = COVER_OUT + 10;
 
