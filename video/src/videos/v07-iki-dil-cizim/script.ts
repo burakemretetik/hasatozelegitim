@@ -303,7 +303,7 @@ arrive = leave6 + PAN;
       {d: a1[0], w: 8},
       {d: a1[1], w: 8},
     ],
-    {at: leave6 - 2, speed: 30, gap: 1},
+    {at: leave6 + 4, speed: 30, gap: 1},
   );
 }
 s.in('close').at(arrive - 2);

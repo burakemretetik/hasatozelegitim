@@ -137,7 +137,7 @@ const TextEl: React.FC<{it: RText; f: number; idx: number}> = ({it, f, idx}) => 
 };
 
 const SPACE_IDS = Object.keys(SPACES) as SpaceId[];
-const GHOSTS = ghostScribbles();
+const GHOSTS: ReturnType<typeof ghostScribbles> = []; // faint residue looked like stray marks; texture comes from the grain
 
 const Board: React.FC<{items: RItem[]; f: number; cam: Cam}> = ({items, f, cam}) => (
   <g transform={`translate(${W / 2} ${H / 2}) scale(${cam.z}) translate(${-cam.x} ${-cam.y})`}>
