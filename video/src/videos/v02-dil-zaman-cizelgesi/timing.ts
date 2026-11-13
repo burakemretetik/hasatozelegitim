@@ -4,15 +4,15 @@ export const FPS = 30;
 export const need = (words: number) => Math.ceil((0.35 * words + 1.2) * FPS);
 
 // ---- layout ----
-export const ANCHOR = 680; // screen y of the "you are here" reading line
+export const ANCHOR = 740; // screen y of the "you are here" reading line
 export const AX = 160; // screen x of the vertical age axis
 export const COL = 216; // left edge of the data column (cards, counter)
 export const COL_R = 940; // right edge of the safe zone
 export const HEAD_X = 96; // left edge of headlines
 export const RULER = {x: 100, y: 1062, S: 33}; // hook: horizontal ruler under the title
-export const S_OVER = 32; // px per month in overview
+export const S_OVER = 30; // px per month in overview
 export const S_ZOOM = 120; // px per month when reading a milestone
-export const HER_F = 10; // camera focus month for the "her yaşta" overview
+export const HER_F = 11.4; // camera focus month for the "her yaşta" overview
 
 // ---- beats ----
 const hookFull = 22;
@@ -35,10 +35,10 @@ const m24 = mk(24, m16.out + 6, 26, 3, 9);
 const her = mk(0, m24.out + 6, 36, 4, 13);
 
 const warnIn = her.out;
-const warnFull = warnIn + 50;
+const warnFull = warnIn + 46;
 const warnOut = warnFull + need(20);
 
-const closeIn = warnOut + 22;
+const closeIn = warnOut + 18;
 const closeFull = closeIn + 8 + 16;
 const closeOut = closeFull + need(7);
 const outro = closeOut;
@@ -52,5 +52,5 @@ export const T = {
   warn: {in: warnIn, full: warnFull, out: warnOut},
   close: {in: closeIn, full: closeFull, out: closeOut, cam0: warnOut, cam1: warnOut + 36, rows: warnOut + 12},
   outro,
-  total: outro + 102,
+  total: outro + 108,
 };

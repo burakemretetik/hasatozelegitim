@@ -39,7 +39,7 @@ const CY = 850;
 const LEFT = 130; // card left edge, also the text alignment axis
 const slot = (k: number): Partial<Pose> => {
   const s = 1 - 0.045 * k;
-  return {x: CX, y: CY + (CH / 2) * (1 - s) + 30 * k, s, r: 0, dark: 0.15 * k};
+  return {x: CX, y: CY + (CH / 2) * (1 - s) + 30 * k, s, r: 0, dark: 0.15 * k, blur: k > 0 ? 9 : 0};
 };
 const FAN: Array<Partial<Pose>> = [
   {x: 540, y: 1150, r: 0, s: 0.52},
@@ -54,12 +54,12 @@ const cardPose = (frame: number, k: number): Pose => {
   const steps: Step[] = [
     {at: FAN_IN + [0, 5, 9][k], to: {y: f.y, r: f.r}, p: sp({damping: 15, stiffness: 70})},
     {at: GATHER + k * 3, to: {...slot(k), blur: 14}, p: sp({damping: 18, stiffness: 85})},
-    {at: COVER_OUT - 12, to: {blur: 0}, p: ez(10)},
+    {at: COVER_OUT - 12, to: {blur: k > 0 ? 9 : 0}, p: ez(10)},
     {at: FLIP[k] - 9, to: {ay: -9}, p: ez(9)},
     {at: FLIP[k], to: {ay: 180}, p: sp({damping: 12.5, stiffness: 100})},
     {at: OUT[k], to: {x: -820, y: CY + 80, r: -15}, p: ez(24, THROW)},
     {at: CLOSE_IN + k * 6, to: {...f, blur: 4.5, dark: 0.1}, p: sp({damping: 16, stiffness: 80})},
-    {at: OUTRO + 4 + k * 2, to: {...slot(k), blur: 14}, p: sp({damping: 18, stiffness: 85})},
+    {at: OUTRO + 2 + [2, 0, 4][k], to: {y: 2500, r: f.r! * 2.4}, p: ez(22, Easing.in(Easing.cubic))},
   ];
   for (let j = 0; j < k; j++) {
     steps.push({at: OUT[j] + 8 + (k - j - 1) * 3, to: slot(k - j - 1), p: sp({damping: 14, stiffness: 120})});
