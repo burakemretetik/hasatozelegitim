@@ -10,6 +10,8 @@ export const EASE = {
   in: Easing.bezier(0.45, 0, 0.7, 0.4),
   /** colour-block wipes and pushes */
   inOut: Easing.bezier(0.83, 0, 0.17, 1),
+  /** colour-block panels (gentler in-out so the accent band stays slim) */
+  wipe: Easing.bezier(0.65, 0, 0.35, 1),
   /** gentle settle for secondary elements */
   soft: Easing.bezier(0.33, 1, 0.68, 1),
 };
@@ -39,8 +41,8 @@ export const T = {
   EXIT: 10, // words leaving upwards through their masks
   EXIT_LINE: 1.5, // exit stagger per line
   EXIT_LEAD: 4, // old content starts leaving this many frames before the next scene's wipe
-  WIPE: 17, // colour-block panel travel
-  WIPE_LAG: 4, // background panel trails the accent panel
+  WIPE: 15, // colour-block panel travel
+  WIPE_LAG: 2, // background panel trails the accent panel
   BUILD: 9, // local frame at which a scene's text starts building (wipe ≈ 75 % done)
   MARKER: 14, // orange marker block sweep
   NOTE_DELAY: 22, // small note starts this long after the main text is legible

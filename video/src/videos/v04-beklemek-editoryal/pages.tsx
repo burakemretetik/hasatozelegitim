@@ -154,7 +154,7 @@ export const Page1: React.FC = () => {
       <Block top={500}>
         <div style={{...quoteStyle, fontSize: Q}}>
           {qLines.map((l, i) => (
-            <Rise key={i} at={T.quote + i * 5} lh={QLH} padTop={30} padBottom={34}>
+            <Rise key={i} at={i === 0 ? T.quote - 30 : T.quote + (i - 1) * 5} lh={QLH} padTop={30} padBottom={34}>
               <span style={{position: 'relative'}}>{l}</span>
             </Rise>
           ))}

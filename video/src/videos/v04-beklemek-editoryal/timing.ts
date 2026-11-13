@@ -15,7 +15,7 @@ export const EXIT_STAGGER = 3;
 export const T = {
   // ── Page 1 · opening pull quote (hook)
   kicker: -30,
-  quote: -8, // first line already moving at frame 0
+  quote: 0, // line 1 is already set at frame 0; lines 2–4 follow
   capRule: 40,
   caption: 48,
   turn1: 186,
@@ -23,20 +23,20 @@ export const T = {
   // ── Page 2 · the essay
   b3: 220, // Kimi zaman gerçekten öyle olur.
   hourglass: 250,
-  b4: 318, // Ama beklerken geçen aylar geri gelmez.
-  underline: 360,
-  p2Out: 464, // b3 + b4 + hourglass leave the column
-  dropCap: 484,
-  b5: 490, // paragraph with drop cap
-  seedling: 540,
-  turn2: 726,
+  b4: 312, // Ama beklerken geçen aylar geri gelmez.
+  underline: 354,
+  p2Out: 452, // b3 + b4 + hourglass leave the column
+  dropCap: 472,
+  b5: 478, // paragraph with drop cap
+  seedling: 530,
+  turn2: 720,
 
   // ── Page 3 · the turn & the sign-off
-  b6: 760, // Bir uzmana danışmak…
-  b6Out: 982,
-  b7: 1002, // Hiçbir liste…
-  b7Out: 1146,
-  b8: 1166, // İçinizdeki sesi ciddiye alın.
+  b6: 750, // Bir uzmana danışmak…
+  b6Out: 986,
+  b7: 1004, // Hiçbir liste…
+  b7Out: 1150,
+  b8: 1168, // İçinizdeki sesi ciddiye alın.
   circle: 1204,
   sig: 1270, // signature block
   turn3: 1414,

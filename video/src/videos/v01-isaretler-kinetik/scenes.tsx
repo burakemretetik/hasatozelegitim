@@ -38,7 +38,7 @@ const hook = (): ScenePlan => {
   const last = schedule(lines, -6, 3, 3);
   const exitAt = last + T.LEGIBLE + readFrames(7);
   setExit(lines, exitAt);
-  const markers: MarkerSpec[] = [{lines: [3, 4], start: 14, exit: exitAt + 4, color: C.orange, padY: 0.075}];
+  const markers: MarkerSpec[] = [{lines: [3, 4], start: 14, exit: exitAt + 1, color: C.orange, padY: 0.075}];
   const Comp: React.FC<{f: number}> = ({f}) => <Lines lines={lines} f={f} markers={markers} />;
   return {key: 'hook', exitAt, dir: 'none', accent: C.orange, pal: p, Comp};
 };

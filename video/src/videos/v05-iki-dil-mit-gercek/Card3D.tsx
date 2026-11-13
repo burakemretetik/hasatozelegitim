@@ -14,6 +14,7 @@ const faceBase: React.CSSProperties = {
   overflow: 'hidden',
   backfaceVisibility: 'hidden',
   WebkitBackfaceVisibility: 'hidden',
+  boxShadow: '0 2px 4px rgba(3,12,10,0.28)',
 };
 
 /** Shading + moving specular sheen applied on top of a face while it turns. */
@@ -57,7 +58,7 @@ export const Card3D: React.FC<{
   const shY = (20 + lift * 0.32) * s;
   const shB = (30 + lift * 0.42) * s;
   const shA = 0.5 - lift * 0.0009;
-  const filter = `${pose.blur > 0.05 ? `blur(${pose.blur.toFixed(2)}px) ` : ''}drop-shadow(0px ${shY.toFixed(1)}px ${shB.toFixed(1)}px rgba(3,12,10,${shA.toFixed(3)})) drop-shadow(0px 3px 3px rgba(3,12,10,0.28))`;
+  const filter = `${pose.blur > 0.05 ? `blur(${pose.blur.toFixed(2)}px) ` : ''}drop-shadow(0px ${shY.toFixed(1)}px ${shB.toFixed(1)}px rgba(3,12,10,${shA.toFixed(3)}))`;
   const layers = [];
   for (let i = 0; i < LAYERS; i++) {
     const zz = -THICK / 2 + ((i + 0.5) * THICK) / LAYERS;

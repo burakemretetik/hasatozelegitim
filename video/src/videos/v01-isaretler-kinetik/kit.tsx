@@ -115,7 +115,7 @@ const PB = 0.22;
 const PX = 0.14;
 
 /** One masked line; each word rises out of the mask and leaves upwards through it. */
-export const KLine: React.FC<{l: Line; f: number; color?: string; clip?: (divLeft: number) => string}> = ({l, f, color, clip}) => {
+export const KLine: React.FC<{l: Line; f: number; color?: string; clip?: (divLeft: number, divTop: number) => string}> = ({l, f, color, clip}) => {
   const m = met(l.style, l.text);
   const s = l.size;
   const originX = l.x + (m.l * s) / 100;
@@ -137,7 +137,7 @@ export const KLine: React.FC<{l: Line; f: number; color?: string; clip?: (divLef
         fontSize: s,
         lineHeight: 1,
         color: color ?? l.color,
-        clipPath: clip ? clip(left) : undefined,
+        clipPath: clip ? clip(left, top) : undefined,
         fontKerning: 'normal',
         ...css(l.style),
       }}
@@ -175,9 +175,11 @@ export const Lines: React.FC<{lines: Line[]; f: number; markers?: MarkerSpec[]; 
     const right = Math.max(...ls.map((l) => l.x + l.inkW)) + padX;
     const a = ramp(f, mk.start, T.MARKER, EASE.out);
     const e = ramp(f, mk.exit, T.EXIT - 2, EASE.in);
-    const L = left + e * (right - left);
+    // grows left→right; on exit it folds upwards together with the words
+    const L = left;
     const R = left + a * (right - left);
-    return {mk, top, bottom, L, R, visible: R - L > 0.5};
+    const B = bottom - e * (bottom - top);
+    return {mk, top, bottom: B, L, R, visible: R - L > 0.5 && B - top > 0.5};
   });
   return (
     <>
@@ -199,7 +201,7 @@ export const Lines: React.FC<{lines: Line[]; f: number; markers?: MarkerSpec[]; 
                   l={lines[li]}
                   f={f}
                   color={lines[li].swap}
-                  clip={(dl) => `polygon(${b.L - dl}px 0, ${b.R - dl}px 0, ${b.R - dl}px 100%, ${b.L - dl}px 100%)`}
+                  clip={(dl, dt) => `polygon(${b.L - dl}px ${b.top - dt}px, ${b.R - dl}px ${b.top - dt}px, ${b.R - dl}px ${b.bottom - dt}px, ${b.L - dl}px ${b.bottom - dt}px)`}
                 />
               ))
           : null,
@@ -340,8 +342,8 @@ export const Wipe: React.FC<{f: number; dir: 'up' | 'left'; accent: string; bg: 
   none,
 }) => {
   if (none) return <AbsoluteFill style={{background: bg}}>{children}</AbsoluteFill>;
-  const a = ramp(f, 0, T.WIPE, EASE.inOut);
-  const b = ramp(f, T.WIPE_LAG, T.WIPE, EASE.inOut);
+  const a = ramp(f, 0, T.WIPE, EASE.wipe);
+  const b = ramp(f, T.WIPE_LAG, T.WIPE, EASE.wipe);
   const clip = (p: number) => (dir === 'up' ? `inset(${((1 - p) * 100).toFixed(3)}% 0 0 0)` : `inset(0 0 0 ${((1 - p) * 100).toFixed(3)}%)`);
   return (
     <AbsoluteFill>

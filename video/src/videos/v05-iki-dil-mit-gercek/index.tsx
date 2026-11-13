@@ -53,12 +53,13 @@ const cardPose = (frame: number, k: number): Pose => {
   const init: Pose = {x: f.x!, y: 2400, s: f.s!, r: f.r! * 2.6, ay: 0, blur: 6, dark: 0.14, op: 1};
   const steps: Step[] = [
     {at: FAN_IN + [0, 5, 9][k], to: {y: f.y, r: f.r}, p: sp({damping: 15, stiffness: 70})},
-    {at: GATHER + k * 3, to: {...slot(k), blur: 0}, p: sp({damping: 18, stiffness: 85})},
+    {at: GATHER + k * 3, to: {...slot(k)}, p: sp({damping: 18, stiffness: 85})},
+    {at: COVER_OUT - 12, to: {blur: 0}, p: ez(10)},
     {at: FLIP[k] - 9, to: {ay: -9}, p: ez(9)},
     {at: FLIP[k], to: {ay: 180}, p: sp({damping: 12.5, stiffness: 100})},
     {at: OUT[k], to: {x: -820, y: CY + 80, r: -15}, p: ez(24, THROW)},
     {at: CLOSE_IN + k * 6, to: {...f, blur: 4.5, dark: 0.1}, p: sp({damping: 16, stiffness: 80})},
-    {at: OUTRO + 4 + k * 2, to: {...slot(k), blur: 0}, p: sp({damping: 18, stiffness: 85})},
+    {at: OUTRO + 4 + k * 2, to: {...slot(k), blur: 6}, p: sp({damping: 18, stiffness: 85})},
   ];
   for (let j = 0; j < k; j++) {
     steps.push({at: OUT[j] + 8 + (k - j - 1) * 3, to: slot(k - j - 1), p: sp({damping: 14, stiffness: 120})});
@@ -67,8 +68,8 @@ const cardPose = (frame: number, k: number): Pose => {
 };
 
 const dropPose = (frame: number, at: number, outAt?: number): Pose =>
-  poseAt(frame, {x: CX, y: CY - 150, s: 1.32, r: 5, ay: 0, blur: 0, dark: 0, op: 0}, [
-    {at, to: {op: 1}, p: ez(6)},
+  poseAt(frame, {x: CX, y: CY - 110, s: 1.22, r: 4, ay: 0, blur: 0, dark: 0, op: 0}, [
+    {at, to: {op: 1}, p: ez(4)},
     {at, to: {y: CY, s: 1, r: 0}, p: sp({damping: 15, stiffness: 140})},
     ...(outAt !== undefined ? [{at: outAt, to: {x: -820, y: CY - 60, r: -16}, p: ez(26, THROW)}] : []),
   ]);
