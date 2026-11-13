@@ -9,13 +9,13 @@ export const AX = 160; // screen x of the vertical age axis
 export const COL = 216; // left edge of the data column (cards, counter)
 export const COL_R = 940; // right edge of the safe zone
 export const HEAD_X = 96; // left edge of headlines
-export const RULER = {x: 100, y: 1062, S: 33}; // hook: horizontal ruler under the title
+export const RULER = {x: 96, y: 1160, S: 34}; // hook: horizontal ruler under the title
 export const S_OVER = 30; // px per month in overview
 export const S_ZOOM = 120; // px per month when reading a milestone
 export const HER_F = 11.4; // camera focus month for the "her yaşta" overview
 
 // ---- beats ----
-const hookFull = 22;
+const hookFull = 24;
 const hookOut = hookFull + need(7);
 const b2In = hookOut + 12;
 const b2Full = b2In + 5 + 18;
@@ -29,7 +29,7 @@ const mk = (month: number, start: number, travel: number, nLines: number, words:
   return {month, ts: start, te, textIn, full, out: full + need(words)};
 };
 
-const m12 = mk(12, b2Out + 4, 32, 3, 11);
+const m12 = mk(12, b2Out + 4, 32, 4, 11);
 const m16 = mk(16, m12.out + 6, 22, 2, 6);
 const m24 = mk(24, m16.out + 6, 26, 3, 9);
 const her = mk(0, m24.out + 6, 36, 4, 13);

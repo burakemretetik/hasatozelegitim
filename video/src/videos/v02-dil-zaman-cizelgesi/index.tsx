@@ -53,8 +53,8 @@ const getCam = (f: number): Cam => {
   const sp = prog(f, T.swing[0], T.swing[1] - T.swing[0], EASE.inOut);
   const Lm = kf(f, [
     [0, 1.5],
-    [44, 24.6, EASE.out],
-    [T.swing[1] - 8, 24.6],
+    [44, 29.5, EASE.out],
+    [T.swing[1] - 8, 29.5],
     [T.swing[1] + 16, 90, EASE.out],
   ]);
   return {
@@ -157,6 +157,7 @@ const AxisLayer: React.FC<{f: number; cam: Cam}> = ({f, cam}) => {
   const fine = clamp01((S - 60) / 40);
   const labelAll = clamp01((S - 75) / 30);
   const gridOp = clamp01((sp - 0.75) / 0.25) * fade;
+  const bold = 1 - sp;
 
   // band "her yaşta"
   const bp = prog(f, her.ts + 8, 30, EASE.inOut) * fade;
@@ -192,16 +193,16 @@ const AxisLayer: React.FC<{f: number; cam: Cam}> = ({f, cam}) => {
           <rect x={-12} width={24} y={bandTop} height={Math.max(0, bandBot - bandTop)} rx={12} fill={C.orange} opacity={0.32} />
         )}
         {/* axis line */}
-        {f < T.outro && <line x1={0} y1={0} x2={0} y2={Lm * S} stroke={C.green} strokeWidth={3} strokeLinecap="round" />}
+        {f < T.outro && <line x1={0} y1={0} x2={0} y2={Lm * S} stroke={C.green} strokeWidth={3 + 2 * bold} strokeLinecap="round" />}
         <g opacity={fade}>
-          <line x1={-16} x2={16} y1={0} y2={0} stroke={C.green} strokeWidth={3} strokeLinecap="round" />
+          <line x1={-16 * (1 + 0.6 * bold)} x2={16 * (1 + 0.6 * bold)} y1={0} y2={0} stroke={C.green} strokeWidth={3 + 2 * bold} strokeLinecap="round" />
           {/* ticks */}
           {months.map((m) => {
             const a = clamp01((Lm - m) * 1.5);
             if (a <= 0) return null;
             const u = m * S;
             const major = m % 6 === 0;
-            const len = (major ? 26 : 14) * a;
+            const len = (major ? 26 : 14) * a * (1 + 0.6 * bold);
             const quarters =
               fine > 0.01
                 ? [0.25, 0.5, 0.75].map((q) => (
@@ -209,11 +210,12 @@ const AxisLayer: React.FC<{f: number; cam: Cam}> = ({f, cam}) => {
                   ))
                 : null;
             const lop = major ? 1 : labelAll;
-            const w = String(m).length * 18;
-            const dist = 26 + 14 + (w / 2) * cs + 13 * sn;
+            const fs = 30 + 10 * bold;
+            const w = String(m).length * 0.6 * fs;
+            const dist = 26 * (1 + 0.6 * bold) + 14 + (w / 2) * cs + fs * 0.45 * sn;
             return (
               <g key={m}>
-                <line x1={-len} x2={0} y1={u} y2={u} stroke={C.green} strokeWidth={major ? 3 : 2} opacity={major ? 0.9 : 0.55} />
+                <line x1={-len} x2={0} y1={u} y2={u} stroke={C.green} strokeWidth={(major ? 3 : 2) * (1 + 0.4 * bold)} opacity={major ? 0.9 : 0.55} />
                 {quarters}
                 {lop > 0.01 && (
                   <g transform={`translate(${-dist} ${u}) rotate(${-angle})`} opacity={lop * a}>
@@ -222,7 +224,7 @@ const AxisLayer: React.FC<{f: number; cam: Cam}> = ({f, cam}) => {
                       dominantBaseline="central"
                       fontFamily={FONT.grotesk}
                       fontWeight={major ? 600 : 500}
-                      fontSize={30}
+                      fontSize={fs}
                       fill={major ? C.text2 : C.text2}
                       opacity={major ? 1 : 0.75}
                     >
@@ -248,7 +250,7 @@ const AxisLayer: React.FC<{f: number; cam: Cam}> = ({f, cam}) => {
           })}
           {/* you-are-here marker */}
           {markerOp > 0.001 && (
-            <g transform={`translate(0 ${M * S + bump}) scale(${markerScale})`} opacity={markerOp}>
+            <g transform={`translate(0 ${M * S + bump}) scale(${markerScale * (1 + 0.2 * bold)})`} opacity={markerOp}>
               <circle r={30 + 4 * breath} fill={C.orange} opacity={0.16 + 0.06 * breath} />
               <circle r={17} fill={C.orange} stroke={C.cream} strokeWidth={5} />
             </g>
@@ -283,7 +285,7 @@ const Rows: React.FC<{f: number; cam: Cam}> = ({f, cam}) => {
         const s1 = T.b2.full + i * 8;
         const s2 = T.close.rows + i * 6;
         const a1 = prog(f, s1, 20, EASE.out) * (1 - prog(f, T.ms[0].ts - 4, 12, EASE.in));
-        const a2 = prog(f, s2, 20, EASE.out) * (1 - prog(f, T.outro, 12, EASE.in));
+        const a2 = prog(f, s2, 20, EASE.out) * (1 - prog(f, T.outro - 6, 12, EASE.in));
         const a = Math.max(a1, a2);
         if (a <= 0.001) return null;
         const ip = f < T.warn.in ? prog(f, s1 + 4, 28, EASE.inOut) : prog(f, s2 + 4, 28, EASE.inOut);
@@ -430,7 +432,7 @@ const Counter: React.FC<{f: number; cam: Cam}> = ({f, cam}) => {
 // ---------------------------------------------------------------- data cards
 type CardDef = {ms: Ms; icons: IconC[]; lines: string[]};
 const CARDS: CardDef[] = [
-  {ms: T.ms[0], icons: [IconWave, IconHand], lines: ['*Agulamıyorsa;*', 'el sallama, işaret etme', 'gibi *jestleri kullanmıyorsa*']},
+  {ms: T.ms[0], icons: [IconWave, IconHand], lines: ['*Agulamıyorsa;*', 'el sallama, işaret etme', 'gibi *jestleri*', '*kullanmıyorsa*']},
   {ms: T.ms[1], icons: [IconBubble1], lines: ['Hiç *tek kelime*', '*söylemiyorsa*']},
   {ms: T.ms[2], icons: [IconBubble2], lines: ['Taklit olmayan,', '*iki kelimelik* anlamlı', 'ifadeler kurmuyorsa']},
   {
@@ -440,14 +442,52 @@ const CARDS: CardDef[] = [
   },
 ];
 
-const Card: React.FC<{f: number; c: CardDef}> = ({f, c}) => {
+const CARD_H = 600;
+const CARD_PAD = 34;
+const FOOT_W = COL_R - COL - CARD_PAD * 2;
+
+/** footer of every card: a mini map of the age axis with the current stop */
+const MiniAxis: React.FC<{f: number; ms: Ms; idx: number}> = ({f, ms, idx}) => {
+  const lp = prog(f, ms.te - 2, 26, EASE.out);
+  const np = prog(f, ms.te + 6, 16, EASE.out);
+  const X = (m: number) => 12 + (m / 30) * (FOOT_W - 24);
+  const isHer = idx === 3;
+  return (
+    <svg width={FOOT_W} height={40} style={{position: 'absolute', left: CARD_PAD, bottom: 34, overflow: 'visible'}}>
+      <line x1={X(0)} x2={X(0) + (X(30) - X(0)) * lp} y1={20} y2={20} stroke={C.line2} strokeWidth={3} strokeLinecap="round" />
+      {[0, 6, 12, 18, 24, 30].map((m) => (
+        <line key={m} x1={X(m)} x2={X(m)} y1={12} y2={28} stroke={C.line2} strokeWidth={2} opacity={clamp01(lp * 30 - m + 1)} />
+      ))}
+      {isHer && <rect x={X(0) - 8} y={12} width={(X(30) - X(0) + 16) * np} height={16} rx={8} fill={C.orange} opacity={0.42} />}
+      {[12, 16, 24].map((m, i) => {
+        const cur = i === idx;
+        const past = i < idx || isHer;
+        const op = clamp01(lp * 30 - m + 1);
+        return (
+          <g key={m} opacity={op}>
+            {cur && <circle cx={X(m)} cy={20} r={22 * np} fill={C.orange} opacity={0.2} />}
+            <circle
+              cx={X(m)}
+              cy={20}
+              r={cur ? 8 + 4 * np : 8}
+              fill={cur ? C.orange : past ? C.green : WHITE}
+              stroke={cur ? C.orange : past ? C.green : C.line2}
+              strokeWidth={3}
+            />
+          </g>
+        );
+      })}
+    </svg>
+  );
+};
+
+const Card: React.FC<{f: number; c: CardDef; idx: number}> = ({f, c, idx}) => {
   const {ms} = c;
   const u = prog(f, ms.te - 14, 20, EASE.out) * (1 - prog(f, ms.out + 3, 10, EASE.in));
   if (u <= 0.001) return null;
   const co = prog(f, ms.out, 6, EASE.in);
-  const nl = c.lines.length;
   return (
-    <div style={{position: 'absolute', left: COL, top: ANCHOR + 2, width: COL_R - COL}}>
+    <div style={{position: 'absolute', left: COL, top: ANCHOR + 2, width: COL_R - COL, height: CARD_H}}>
       <div
         style={{
           position: 'absolute',
@@ -461,21 +501,21 @@ const Card: React.FC<{f: number; c: CardDef}> = ({f, c}) => {
           transformOrigin: 'top',
         }}
       />
-      <div style={{position: 'relative', padding: '34px 36px 42px', opacity: 1 - co, transform: `translateY(${-co * 10}px)`}}>
-        <div style={{display: 'flex', gap: 22, height: 124, alignItems: 'center'}}>
+      <div style={{position: 'absolute', inset: 0, opacity: 1 - co, transform: `translateY(${-co * 10}px)`}}>
+        <div style={{position: 'absolute', left: CARD_PAD, top: 34, display: 'flex', gap: 28, height: 150, alignItems: 'center'}}>
           {c.icons.map((Ic, i) => (
-            <Ic key={i} p={prog(f, ms.te - 4 + i * 8, 30, EASE.inOut)} f={f} size={124} />
+            <Ic key={i} p={prog(f, ms.te - 4 + i * 8, 30, EASE.inOut)} f={f} size={150} />
           ))}
         </div>
-        <div style={{marginTop: 22}}>
+        <div style={{position: 'absolute', left: CARD_PAD, top: 34 + 150 + 20}}>
           {c.lines.map((l, i) => (
             <Line
               key={i}
               text={l}
               p={prog(f, ms.textIn + i * 3, 14, EASE.out)}
               hp={prog(f, ms.full + 2 + i * 3, 16, EASE.out)}
-              size={52}
-              lh={68}
+              size={56}
+              lh={72}
               font={FONT.body}
               weight={500}
               emWeight={700}
@@ -483,7 +523,7 @@ const Card: React.FC<{f: number; c: CardDef}> = ({f, c}) => {
             />
           ))}
         </div>
-        <div style={{height: nl ? 0 : 0}} />
+        <MiniAxis f={f} ms={ms} idx={idx} />
       </div>
     </div>
   );
@@ -499,7 +539,8 @@ const Headline: React.FC<{
   size: number;
   lh: number;
   hpStart?: number;
-}> = ({f, lines, start, out, top, size, lh, hpStart}) => {
+  stagger?: number;
+}> = ({f, lines, start, out, top, size, lh, hpStart, stagger = 5}) => {
   const o = prog(f, out, 12, EASE.in);
   if (f < start - 8 || o >= 1) return null;
   return (
@@ -508,7 +549,7 @@ const Headline: React.FC<{
         <Line
           key={i}
           text={l}
-          p={prog(f, start + i * 5, 18, EASE.out)}
+          p={prog(f, start + i * stagger, 18, EASE.out)}
           hp={hpStart === undefined ? 0 : prog(f, hpStart, 18, EASE.out)}
           size={size}
           lh={lh}
@@ -531,9 +572,9 @@ const Hook: React.FC<{f: number}> = ({f}) => {
         style={{
           position: 'absolute',
           left: HEAD_X,
-          top: 566,
-          width: 76,
-          height: 8,
+          top: 420,
+          width: 96,
+          height: 10,
           borderRadius: 4,
           background: C.orange,
           transform: `scaleX(${bar * (1 - o)})`,
@@ -542,13 +583,14 @@ const Hook: React.FC<{f: number}> = ({f}) => {
       />
       <Headline
         f={f}
-        lines={['Konuşma gecikmesi', '*tek başına* otizm', 'anlamına gelmez.']}
-        start={-5}
+        lines={['Konuşma', 'gecikmesi', '*tek başına*', 'otizm anlamına', 'gelmez.']}
+        start={-6}
+        stagger={3}
         out={T.hook.out}
-        top={606}
-        size={84}
-        lh={98}
-        hpStart={20}
+        top={468}
+        size={112}
+        lh={118}
+        hpStart={22}
       />
     </>
   );
@@ -638,9 +680,9 @@ const Outro: React.FC<{f: number}> = ({f}) => {
   const by = Ly + 30.4 * k;
   const stemTop = by + (13.5 * bs) / 40;
   const stemBot = by + (38.5 * bs) / 40;
-  const mp = prog(f, t0, 22, EASE.inOut);
-  const gp = prog(f, t0 + 22, 24, EASE.linear);
-  const lo = prog(f, t0 + 28, 14, EASE.out);
+  const mp = prog(f, t0 + 4, 18, EASE.inOut);
+  const gp = prog(f, t0 + 20, 22, EASE.linear);
+  const lo = prog(f, t0 + 24, 14, EASE.out);
   const tg = prog(f, t0 + 26, 14, EASE.out);
   return (
     <>
@@ -701,14 +743,14 @@ export const Video: React.FC = () => {
       />
       <Counter f={f} cam={cam} />
       {CARDS.map((c, i) => (
-        <Card key={i} f={f} c={c} />
+        <Card key={i} f={f} c={c} idx={i} />
       ))}
       <WarningBlock f={f} />
       <Headline
         f={f}
         lines={['*Erken* fark etmek,', 'desteğe *erken*', 'başlamak demektir.']}
         start={T.close.in}
-        out={T.close.out}
+        out={T.close.out + 10}
         top={ANCHOR - 70 - 282}
         size={84}
         lh={94}

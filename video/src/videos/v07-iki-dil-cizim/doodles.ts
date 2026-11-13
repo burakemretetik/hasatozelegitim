@@ -208,8 +208,8 @@ export const check = (x: number, y: number, k: number, seed: string): Stroke[] =
 ];
 
 export const xMark = (x0: number, y0: number, x1: number, y1: number, seed: string): Stroke[] => [
-  S(line([x0, y0], [x1, y1], seed + '1', 0.04), {c: RED, w: 15, speed: 55}),
-  S(line([x1, y0 - 6], [x0, y1 + 4], seed + '2', 0.04), {c: RED, w: 15, speed: 55}),
+  S(line([x0, y0], [x1, y1], seed + '1', 0.04), {c: RED, w: 12, o: 0.82, speed: 55}),
+  S(line([x1, y0 - 6], [x0, y1 + 4], seed + '2', 0.04), {c: RED, w: 12, o: 0.82, speed: 55}),
 ];
 
 export const ghostScribbles = (): Stroke[] => {
@@ -224,5 +224,5 @@ export const ghostScribbles = (): Stroke[] => {
     [1650, 520, 280],
     [140, 640, 220],
   ];
-  return spots.map(([x, y, w], i) => S(wavy(x, x + w, y, 14, 46, 'g' + i), {w: 9, o: 0.05}));
+  return spots.map(([x, y, w], i) => S(wavy(x, x + w, y, 14, 46, 'g' + i), {w: 9, o: 0.03}));
 };

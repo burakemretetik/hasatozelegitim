@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Easing, interpolate, useCurrentFrame} from 'remotion';
-import {C, FONT, SafeZoneDebug} from '../../shared/brand';
+import {C, FONT} from '../../shared/brand';
 import {Pose, Step, THROW, clamp01, ez, poseAt, prog, sp} from './anim';
 import {CH, Card3D} from './Card3D';
 import {CARDS, CLOSING, HOOK, SOURCES, Seg} from './content';
@@ -30,8 +30,6 @@ export const meta = {
   durationInFrames: END,
   coverFrame: 236,
 };
-
-const DEBUG = false;
 
 // ---------- layout ----------
 const CX = 540;
@@ -257,7 +255,6 @@ export const Video: React.FC = () => {
           </>
         ) : null}
       </div>
-      {DEBUG ? <SafeZoneDebug /> : null}
     </AbsoluteFill>
   );
 };
