@@ -7,7 +7,7 @@ export const EASE = {
   /** entrances – fast start, long soft landing (expo-like) */
   out: Easing.bezier(0.16, 1, 0.3, 1),
   /** exits – slow start, accelerating away */
-  in: Easing.bezier(0.7, 0, 0.84, 0),
+  in: Easing.bezier(0.45, 0, 0.7, 0.4),
   /** colour-block wipes and pushes */
   inOut: Easing.bezier(0.83, 0, 0.17, 1),
   /** gentle settle for secondary elements */
@@ -34,14 +34,14 @@ export const countWords = (texts: string[]) =>
 export const T = {
   RISE: 17, // a word rising out of its mask
   WORD: 2, // stagger between words of a line
-  LINE: 3, // extra stagger when a new line starts
-  LEGIBLE: 7, // frames after a word starts until it reads cleanly (expo-out ≈ 92 %)
-  EXIT: 11, // words leaving upwards through their masks
+  LINE: 2, // extra stagger when a new line starts
+  LEGIBLE: 6, // frames after a word starts until it reads cleanly (expo-out ≈ 92 %)
+  EXIT: 10, // words leaving upwards through their masks
   EXIT_LINE: 1.5, // exit stagger per line
-  EXIT_LEAD: 3, // old content starts leaving this many frames before the next scene's wipe
+  EXIT_LEAD: 4, // old content starts leaving this many frames before the next scene's wipe
   WIPE: 17, // colour-block panel travel
   WIPE_LAG: 4, // background panel trails the accent panel
-  BUILD: 11, // local frame at which a scene's text starts building (wipe ≈ 75 % done)
+  BUILD: 9, // local frame at which a scene's text starts building (wipe ≈ 75 % done)
   MARKER: 14, // orange marker block sweep
   NOTE_DELAY: 22, // small note starts this long after the main text is legible
   OUTRO: 100, // outro length

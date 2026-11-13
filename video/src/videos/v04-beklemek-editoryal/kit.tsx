@@ -53,7 +53,9 @@ export const Rise: React.FC<{
   const f = useCurrentFrame();
   const pin = tween(f, at, at + dur, EASE_OUT);
   const pout = out === undefined ? 0 : tween(f, out, out + outDur, EASE_IN);
-  const y = (1 - pin) * (lh + padTop + 6) - pout * (lh + padBottom + 6);
+  // travel far enough that accents/descenders never peek through the padded mask
+  const travel = lh + padTop + padBottom + 0.25 * lh;
+  const y = (1 - pin) * travel - pout * travel;
   const opacity = interpolate(pin, [0, 0.45], [0, 1], {extrapolateRight: 'clamp'}) * (1 - 0.6 * pout);
   if (pin <= 0 || pout >= 1) {
     return <div style={{height: lh, ...style}} />;
@@ -226,7 +228,7 @@ export const HandCircle: React.FC<{at: number; dur?: number}> = ({at, dur = 34})
     <svg
       viewBox="0 0 600 220"
       preserveAspectRatio="none"
-      style={{position: 'absolute', left: '-16%', width: '132%', top: '-14%', height: '128%', overflow: 'visible'}}
+      style={{position: 'absolute', left: '-5%', width: '120%', top: '-10%', height: '122%', overflow: 'visible'}}
     >
       <DrawPath d={loopPath} p={p} stroke={ACCENT} width={7} />
     </svg>

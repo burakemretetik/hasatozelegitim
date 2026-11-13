@@ -34,7 +34,7 @@ export const Statement: React.FC<{f: number}> = ({f}) => {
   const metaO = interpolate(f, [EXPAND_AT, EXPAND_AT + 6], [1, 0], CL);
 
   // outro: statement lifts away
-  const exit = interpolate(f, [OUTRO_AT, OUTRO_AT + 16], [0, 1], {...CL, easing: Easing.in(Easing.cubic)});
+  const exit = interpolate(f, [OUTRO_AT, OUTRO_AT + 12], [0, 1], {...CL, easing: Easing.in(Easing.cubic)});
 
   return (
     <div
@@ -95,12 +95,12 @@ export const Statement: React.FC<{f: number}> = ({f}) => {
 export const Outro: React.FC<{f: number}> = ({f}) => {
   const t = f - OUTRO_AT;
   if (t < 0) return null;
-  const av = sp(t - 6, SPR.pop);
-  const avO = interpolate(t, [6, 11], [0, 1], CL);
-  const basak = interpolate(t, [10, 44], [0, 1], CL);
-  const nm = sp(t - 16, SPR.soft);
-  const bub = sp(t - 28, SPR.pop);
-  const bubO = interpolate(t, [28, 33], [0, 1], CL);
+  const av = sp(t - 14, SPR.pop);
+  const avO = interpolate(t, [14, 19], [0, 1], CL);
+  const basak = interpolate(t, [16, 50], [0, 1], CL);
+  const nm = sp(t - 24, SPR.soft);
+  const bub = sp(t - 36, SPR.pop);
+  const bubO = interpolate(t, [36, 41], [0, 1], CL);
   return (
     <div style={{position: 'absolute', inset: 0}}>
       <div

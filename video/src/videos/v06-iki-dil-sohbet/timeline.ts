@@ -61,8 +61,8 @@ export const T = {
   hlDur: 18,
   finalHold: 44, // final bubble sits in the chat before expanding
   expandDur: 34,
-  cardHold: 92,
-  outroDur: 108,
+  cardHold: 80,
+  outroDur: 120,
 } as const;
 
 export const SPR = {

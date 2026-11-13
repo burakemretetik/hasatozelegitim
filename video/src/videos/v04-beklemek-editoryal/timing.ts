@@ -42,9 +42,7 @@ export const T = {
   turn3: 1414,
 
   // ── Back cover · brand outro
-  outroLogo: 1428,
-  outroLine: 1450,
-  end: 1508,
+  end: 1500,
 } as const;
 
 export const DURATION = T.end;

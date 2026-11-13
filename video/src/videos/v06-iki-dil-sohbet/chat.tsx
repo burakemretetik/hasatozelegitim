@@ -121,7 +121,7 @@ const popStyle = (f: number, at: number, who: 'veli' | 'hasat'): React.CSSProper
   const o = interpolate(f, [at, at + 5], [0, 1], CL);
   return {
     transform: `translateY(${(1 - s) * 24}px) scale(${0.45 + 0.55 * s})`,
-    transformOrigin: who === 'hasat' ? '0% 100%' : '100% 100%',
+    transformOrigin: who === 'hasat' ? '0% 0%' : '100% 100%',
     opacity: o,
   };
 };
@@ -177,7 +177,7 @@ export const Bubble: React.FC<{m: Timed; f: number}> = ({m, f}) => {
   return (
     <div style={{...base, maxWidth: LAYOUT.bubbleMaxW}}>
       <div style={{fontFamily: FONT.body, fontSize: BUB.font, fontWeight: 450, letterSpacing: -0.3}}>
-        <Lines lines={m.lines} f={f} pop={m.pop} lh={BUB.lh} ulH={6} ulOff={4} hlWeight={650} />
+        <Lines lines={m.lines} f={f} pop={m.pop} lh={BUB.lh} ulH={6} ulOff={1} hlWeight={650} />
       </div>
       <Meta m={m} f={f} dark={dark} />
     </div>
@@ -189,7 +189,7 @@ export const TypingIndicator: React.FC<{m: Timed; f: number}> = ({m, f}) => {
   const start = m.indStart!;
   if (f < start || f > m.pop + 6) return null;
   const s = sp(f - start, SPR.pop);
-  const out = interpolate(f, [m.pop - 1, m.pop + 5], [1, 0], CL);
+  const out = interpolate(f, [m.pop, m.pop + 3], [1, 0], CL);
   const t = f - start;
   return (
     <div

@@ -217,13 +217,13 @@ export const Page2: React.FC = () => {
   );
 };
 
-const DC_SHIFT = 22; // drop-cap baseline alignment with line 3
+const DC_SHIFT = 0; // drop-cap baseline alignment with line 3
 const Paragraph: React.FC = () => {
   const f = useCurrentFrame();
   const FS = 60;
   const LH = 86;
   const cap = tween(f, T.dropCap, T.dropCap + 34, EASE_OUT);
-  const indent = 196;
+  const indent = 218;
   const lines: Array<[string, boolean]> = [
     ['elişimin en hızlı', true],
     ['olduğu ilk yıllarda', true],
@@ -232,7 +232,7 @@ const Paragraph: React.FC = () => {
     ['sağlam bir zemin oluşturur.', false],
   ];
   return (
-    <Block top={470}>
+    <Block top={500}>
       {/* drop cap */}
       <div
         style={{
@@ -277,7 +277,7 @@ export const Page3: React.FC = () => {
   return (
     <Page folio={14} seed={13} span={[T.turn2, T.turn3 + TURN]}>
       {/* b6 */}
-      <Block top={432}>
+      <Block top={492}>
         <div style={{...romanStyle, fontSize: 68}}>
           <Rise at={T.b6} out={o6} lh={90}>Bir uzmana danışmak,</Rise>
           <div style={{color: INK2}}>
@@ -292,7 +292,7 @@ export const Page3: React.FC = () => {
       </Block>
 
       {/* b7 – pull quote between rules */}
-      <Block top={520}>
+      <Block top={580}>
         <Rule at={T.b7 - 8} out={o7 + 8} width={COL_W} thick={5} color={INK} dur={30} />
         <div style={{...serif(144, 0), fontWeight: 460, fontSize: 100, color: INK, marginTop: 44}}>
           <Rise at={T.b7} out={o7} lh={120}>Hiçbir liste</Rise>
@@ -303,7 +303,7 @@ export const Page3: React.FC = () => {
       </Block>
 
       {/* b8 – closing line, circled */}
-      <Block top={452}>
+      <Block top={486}>
         <div style={{...quoteStyle, fontSize: 136}}>
           <Rise at={T.b8} lh={154} padBottom={50}>
             İçinizdeki{' '}
@@ -332,7 +332,7 @@ const Signature: React.FC = () => {
   });
   const mark = tween(f, s + 52, s + 92, EASE_INOUT);
   return (
-    <Block top={884}>
+    <Block top={924}>
       <Rule at={s} width={150} thick={2} color={INK} dur={24} />
       <div
         style={{
@@ -369,7 +369,8 @@ const Signature: React.FC = () => {
 
 export const BackCover: React.FC = () => {
   const f = useCurrentFrame();
-  const logo = tween(f, T.outroLogo, T.outroLogo + 36, EASE_OUT);
+  const settle = tween(f, T.turn3, T.turn3 + 56, EASE_OUT);
+  const rule = tween(f, T.turn3 + 14, T.turn3 + 40, EASE_INOUT);
   return (
     <AbsoluteFill style={{background: C.green, overflow: 'hidden'}}>
       <Paper seed={21} base={C.green} dark />
@@ -384,23 +385,14 @@ export const BackCover: React.FC = () => {
           border: `2px solid rgba(185,201,195,0.28)`,
         }}
       />
-      <AbsoluteFill style={{alignItems: 'center'}}>
-        <div
-          style={{
-            position: 'absolute',
-            top: 500,
-            opacity: interpolate(logo, [0, 0.5], [0, 1], {extrapolateRight: 'clamp'}),
-            transform: `translateY(${((1 - logo) * 40).toFixed(2)}px) scale(${(0.96 + 0.04 * logo).toFixed(4)})`,
-          }}
-        >
+      <AbsoluteFill style={{alignItems: 'center', transform: `translateY(${((1 - settle) * 22).toFixed(2)}px)`}}>
+        <div style={{position: 'absolute', top: 500, transform: `scale(${(1.03 - 0.03 * settle).toFixed(4)})`}}>
           <HasatLogo vertical dark width={400} />
         </div>
-        <div style={{position: 'absolute', top: 1066, width: 660, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <Rule at={T.outroLine - 8} width={120} thick={3} color={ACCENT} dur={22} />
-          <div style={{...quoteStyle, color: C.cream, fontSize: 66, marginTop: 36, textAlign: 'center', width: 900}}>
-            <Rise at={T.outroLine} lh={86}>
-              Yazının tamamı blogumuzda.
-            </Rise>
+        <div style={{position: 'absolute', top: 1066, width: 900, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <div style={{width: 120, height: 3, background: ACCENT, transform: `scaleX(${rule.toFixed(3)})`}} />
+          <div style={{...quoteStyle, color: C.cream, fontSize: 66, lineHeight: '86px', marginTop: 36, textAlign: 'center'}}>
+            Yazının tamamı blogumuzda.
           </div>
         </div>
       </AbsoluteFill>
