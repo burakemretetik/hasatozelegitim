@@ -48,9 +48,9 @@ HOME_PAGES = {"Main.dc.html", "Deutsch.dc.html"}
 # source artboard -> output path, language, description
 PAGES = {
     "Main.dc.html": ("index.html", "tr",
-        "Otizm, özel öğrenme güçlüğü ve gecikmiş konuşma alanında yüz yüze ve online özel eğitim ve aile danışmanlığı. Özel eğitim uzmanı Hanife Tetik ile, Türkiye'den ya da yurt dışından."),
+        "Aydın'da (Efeler) otizm, özel öğrenme güçlüğü ve gecikmiş konuşma alanında bire bir özel eğitim ve aile danışmanlığı; uygun olduğunda online. Özel eğitim uzmanı Hanife Tetik ile."),
     "Deutsch.dc.html": ("de/index.html", "de",
-        "Förderung bei Autismus, Lernstörungen und verzögerter Sprachentwicklung – vor Ort in Aydın und online. Einzelstunden und Elternberatung mit der Sonderpädagogin Hanife Tetik."),
+        "Sonderpädagogische Einzelförderung und Elternberatung in Aydın (Türkei) bei Autismus, Lernstörungen und verzögerter Sprachentwicklung – vor Ort, bei Eignung auch online. Mit der Sonderpädagogin Hanife Tetik."),
     "Blog.dc.html": ("blog/index.html", "tr",
         "Otizm, disleksi, iki dillilik ve evde destek üzerine ailelere yol gösteren yazılar."),
     "BlogYazi.dc.html": ("blog/online-ders-hazirligi.html", "tr",
